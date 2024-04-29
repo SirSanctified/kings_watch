@@ -7,12 +7,13 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
   Button,
 } from "@nextui-org/react";
 import { useState } from "react";
 import { ThemeSwitcher } from "./theme-switcher";
 import Image from "next/image";
+import Link from "next/link";
+import { ShoppingCart, Truck } from "lucide-react";
 
 export default function CustomNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,6 +35,7 @@ export default function CustomNavbar() {
     <Navbar
       isBordered
       position="sticky"
+      isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
       className="w-full"
     >
@@ -42,27 +44,39 @@ export default function CustomNavbar() {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
-        <NavbarBrand>
-          <Image
-            src={"/logo-icon.png"}
-            alt="King's Watch Logo"
-            width={50}
-            height={50}
-          />
-          <p className="font-bold text-inherit">King&apos;s Watch</p>
-        </NavbarBrand>
+        <Link href="/">
+          <NavbarBrand>
+            <Image
+              src={"/logo-icon.png"}
+              alt="King's Watch Logo"
+              width={50}
+              height={50}
+            />
+            <p className="font-bold hidden sm:block text-2xl text-inherit">
+              King&apos;s Watch
+            </p>
+          </NavbarBrand>
+        </Link>
       </NavbarContent>
 
       <NavbarContent
         className="hidden sm:flex gap-4"
-        justify="center"
+        justify="end"
       >
         <NavbarItem>
           <Link
             color="foreground"
             href="#"
           >
-            Features
+            Products
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            color="foreground"
+            href="#"
+          >
+            Orders
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
@@ -70,39 +84,31 @@ export default function CustomNavbar() {
             href="#"
             aria-current="page"
           >
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            color="foreground"
-            href="#"
-          >
-            Integrations
+            <ShoppingCart size={24} />
           </Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
+        <NavbarItem className="flex items-center justify-center">
           <ThemeSwitcher />
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
           <Button
-            as={Link}
+            size="md"
             color="primary"
             href="#"
             variant="flat"
           >
-            Sign Up
+            Log In
           </Button>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+          <NavbarMenuItem
+            key={`${item}-${index}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
             <Link
               color={
                 index === 2
@@ -113,7 +119,6 @@ export default function CustomNavbar() {
               }
               className="w-full"
               href="#"
-              size="lg"
             >
               {item}
             </Link>
