@@ -37,7 +37,8 @@ export default function CustomNavbar() {
       position="sticky"
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
-      className="w-full"
+      className="w-full lg:px-16"
+      maxWidth="full"
     >
       <NavbarContent>
         <NavbarMenuToggle

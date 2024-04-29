@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <NextThemeProvider>
         <body
-          className={`${inter.className} text-foreground bg-background`}
+          className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
           suppressHydrationWarning
         >
           <Providers>
