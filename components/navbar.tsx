@@ -12,6 +12,7 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import { ThemeSwitcher } from "./theme-switcher";
+import Image from "next/image";
 
 export default function CustomNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +32,8 @@ export default function CustomNavbar() {
 
   return (
     <Navbar
-      position="static"
+      isBordered
+      position="sticky"
       onMenuOpenChange={setIsMenuOpen}
       className="w-full"
     >
@@ -41,7 +43,13 @@ export default function CustomNavbar() {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <p className="font-bold text-inherit">ACME</p>
+          <Image
+            src={"/logo-icon.png"}
+            alt="King's Watch Logo"
+            width={50}
+            height={50}
+          />
+          <p className="font-bold text-inherit">King&apos;s Watch</p>
         </NavbarBrand>
       </NavbarContent>
 
