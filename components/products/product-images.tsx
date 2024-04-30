@@ -14,13 +14,14 @@ const ProductImages = ({ imgSrcs }: { imgSrcs: string[] }) => {
           height={500}
           src={imgSrcs[activeImage]}
           alt="Product image"
+          loading="lazy"
         />
       </div>
-      <div className="grid grid-flow-col gap-4 place-items-center">
+      <div className="grid grid-flow-col gap-4 place-items-center overflow-x-auto">
         {imgSrcs.map((imgSrc, index) => (
           <div
             key={index}
-            className="shrink-0 max-w-md lg:max-w-lg cursor-pointer"
+            className="shrink-0 max-w-[24] cursor-pointer"
             onClick={() => setActiveImage(index)}
           >
             <Image
@@ -29,6 +30,7 @@ const ProductImages = ({ imgSrcs }: { imgSrcs: string[] }) => {
               height={500}
               src={imgSrc}
               alt="Product image"
+              loading="lazy"
             />
           </div>
         ))}
