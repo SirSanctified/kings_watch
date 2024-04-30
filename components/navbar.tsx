@@ -67,7 +67,7 @@ export default function CustomNavbar() {
         <NavbarItem>
           <Link
             color="foreground"
-            href="#"
+            href="/products"
           >
             Products
           </Link>
@@ -75,14 +75,14 @@ export default function CustomNavbar() {
         <NavbarItem>
           <Link
             color="foreground"
-            href="#"
+            href="/orders"
           >
             Orders
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
           <Link
-            href="#"
+            href="/cart"
             aria-current="page"
           >
             <ShoppingCart size={24} />
