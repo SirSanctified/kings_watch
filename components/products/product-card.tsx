@@ -3,20 +3,17 @@ import NextImage from "next/image";
 import Star from "../star";
 import Link from "next/link";
 import AddToCartButton from "./add-to-cart-button";
+import { formatCurrency } from "@/lib/utils";
+import { Tag } from "lucide-react";
 
 const ProductCard = ({
   name,
   imgSrc,
   price,
-  rating,
 }: {
   name: string;
   imgSrc: string;
   price: number;
-  rating: {
-    count: number;
-    rate: number;
-  };
 }) => {
   return (
     <Card className="shadow-sm dark:bg-gray-700">
@@ -39,16 +36,11 @@ const ProductCard = ({
       </CardBody>
       <CardFooter className="flex flex-col space-x-2">
         <h2 className="text-xl font-semibold w-full">{name}</h2>
-        <p className="text-md font-normal opacity-60 my-3 w-full flex space-x-2">
-          <Star
-            width={20}
-            height={20}
-            mr={4}
-          />{" "}
-          {rating.rate} ({rating.count} reviews)
-        </p>
-        <div className="flex justify-between items-center w-full">
-          <p className="text-lg font-semibold">${price}</p>
+        <div className="flex mt-3 justify-between items-center w-full">
+          <p className="text-lg font-medium">
+            <Tag className="w-6 h-6 inline transform mr-2 text-yellow-700 rotate-90" />
+            {formatCurrency(price)}
+          </p>
           <AddToCartButton />
         </div>
       </CardFooter>

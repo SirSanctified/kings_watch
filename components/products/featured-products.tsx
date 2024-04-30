@@ -11,25 +11,21 @@ const FeaturedProducts = () => {
           name="Rolex Submariner"
           imgSrc="/hero.svg"
           price={12000}
-          rating={{ count: 5, rate: 4.5 }}
         />
         <ProductCard
           name="Omega Speedmaster"
           imgSrc="/hero.png"
           price={8000}
-          rating={{ count: 5, rate: 4.5 }}
         />
         <ProductCard
           name="Tag Heuer Carrera"
           imgSrc="/hero.svg"
           price={10000}
-          rating={{ count: 5, rate: 4.5 }}
         />
         <ProductCard
           name="Seiko 5 Sports"
           imgSrc="/hero.png"
           price={300}
-          rating={{ count: 5, rate: 4.5 }}
         />
       </div>
     </section>
