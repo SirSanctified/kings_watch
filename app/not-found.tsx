@@ -12,7 +12,7 @@ const NotFound = () => {
     <main className="flex flex-col items-center justify-center h-screen p-4">
       <Card className="max-w-lg shadow-xl shadow-overlay drop-shadow-xl  mx-auto p-8">
         <CardHeader>
-          <h1 className="text-3xl font-bold">Page Not Found</h1>
+          <h1 className="text-3xl text-yellow-700 font-bold">Page Not Found</h1>
         </CardHeader>
         <CardBody>
           <p className="text-lg font-medium">

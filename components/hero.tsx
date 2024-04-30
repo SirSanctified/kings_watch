@@ -5,12 +5,12 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <main className="flex flex-col md:flex-row items-center justify-between gap-4 p-24 px-4 md:px-8 lg:px-24  w-full bg-white dark:bg-gray-800">
-      <div className="w-full md:w-1/2">
+    <main className="flex flex-col lg:flex-row items-center justify-between gap-4 p-24 px-4 md:px-8 lg:px-24  w-full">
+      <div className="w-full lg:w-1/2">
         <h1 className="text-3xl md:text-6xl text-center md:text-start font-bold text-gray-800 dark:text-white">
           Timeless Style: Discover Your Perfect Watch
         </h1>
-        <p className="text-lg md:text-2xl mt-4 text-center md:text-start text-gray-600 dark:text-gray-300">
+        <p className="text-lg md:text-2xl mt-4 text-balance md:text-start text-gray-600 dark:text-gray-300">
           Discover your perfect timepiece from our curated collection of
           renowned watchmakers. We offer nationwide delivery to every city in
           Zimbabwe, starting from just $5. For an even more convenient shopping
@@ -42,7 +42,7 @@ const Hero = () => {
         alt="hero"
         width={612}
         height={408}
-        className="w-full md:w-1/2 md:max-h-[400px]"
+        className="w-full lg:w-1/2"
       />
     </main>
   );
