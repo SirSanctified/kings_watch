@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import NextImage from "next/image";
 import Star from "../star";
 import Link from "next/link";
@@ -16,31 +16,35 @@ const ProductCard = ({
   price: number;
 }) => {
   return (
-    <Card className="shadow-sm dark:bg-gray-700">
+    <Card className="shadow-sm shadow-overlay dark:bg-gray-700">
       <CardBody>
-        <Link
-          href={`/products/${name}`}
-          className="w-full"
-        >
-          <Image
-            isZoomed
-            as={NextImage}
-            src={imgSrc}
-            alt={name}
-            width={300}
-            height={200}
-            className="rounded-lg h-40 w-full object-contain"
-            loading="lazy"
-          />
-        </Link>
+        <Image
+          isZoomed
+          as={NextImage}
+          src={imgSrc}
+          alt={name}
+          width={300}
+          height={200}
+          className="rounded-lg h-40 w-full object-contain"
+          loading="lazy"
+        />
       </CardBody>
       <CardFooter className="flex flex-col space-x-2">
         <h2 className="text-xl font-semibold w-full">{name}</h2>
-        <div className="flex mt-3 justify-between items-center w-full">
-          <p className="text-lg font-medium">
-            <Tag className="w-6 h-6 inline transform mr-2 text-yellow-700 rotate-90" />
-            {formatCurrency(price)}
-          </p>
+        <p className="text-lg font-medium w-full text-start my-4">
+          <Tag className="w-6 h-6 inline transform mr-2 text-yellow-700 rotate-90" />
+          {formatCurrency(price)}
+        </p>
+        <div className="flex mt-3 space-x-3 justify-between items-center w-full">
+          <Button
+            variant="solid"
+            color="primary"
+            as={Link}
+            href={`/products/${name}`}
+            className="w-full"
+          >
+            Learn More
+          </Button>
           <AddToCartButton />
         </div>
       </CardFooter>
