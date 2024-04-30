@@ -11,9 +11,12 @@ const Hero = () => {
           Timeless Style: Discover Your Perfect Watch
         </h1>
         <p className="text-lg md:text-2xl mt-4 text-center md:text-start text-gray-600 dark:text-gray-300">
-          More than just timekeeping: Discover watches that define you.
+          Discover your perfect timepiece from our curated collection of
+          renowned watchmakers. We offer nationwide delivery to every city in
+          Zimbabwe, starting from just $5. For an even more convenient shopping
+          experience, enjoy free delivery within Harare CBD.
         </p>
-        <div className="flex w-full gap-4 flex-col sm:flex-row justify-center md:justify-start items-center mt-8">
+        <div className="flex flex-wrap w-full gap-4 flex-col sm:flex-row justify-center md:justify-start items-center mt-8">
           <Button
             size="lg"
             radius="none"
@@ -35,10 +38,10 @@ const Hero = () => {
         </div>
       </div>
       <Image
-        src="/hero.svg"
+        src="/hero.png"
         alt="hero"
-        width={1920}
-        height={1080}
+        width={612}
+        height={408}
         className="w-full md:w-1/2 md:max-h-[400px]"
       />
     </main>
