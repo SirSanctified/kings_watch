@@ -5,7 +5,7 @@ const CartAdd = ({ width = 24, height = 24 }) => {
       width={width}
       height={height}
       viewBox="0 0 24 24"
-      style={{ fill: "rgb(0, 0, 0); --darkreader-inline-fill: #e8e6e3;" }}
+      style={{ fill: "rgb(0, 0, 0), --darkreader-inline-fill: #e8e6e3" }}
       data-darkreader-inline-fill=""
     >
       <circle
