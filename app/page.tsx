@@ -1,4 +1,5 @@
 import Categories from "@/components/categories";
+import CTA from "@/components/cta";
 import FeaturedProducts from "@/components/featured-products";
 import Hero from "@/components/hero";
 import WhyUs from "@/components/why-us";
@@ -10,6 +11,7 @@ export default function Home() {
       <Categories />
       <FeaturedProducts />
       <WhyUs />
+      <CTA />
     </main>
   );
 }
