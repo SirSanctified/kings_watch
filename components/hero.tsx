@@ -1,4 +1,5 @@
 import { Button } from "@nextui-org/react";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,7 +17,10 @@ const Hero = () => {
           <Button
             size="lg"
             radius="none"
-            className="bg-yellow-800 hover:bg-yellow-600  w-full sm:w-auto transition-all duration-300 ease-linear font-medium text-white rounded-lg"
+            className="bg-yellow-800 hover:bg-yellow-600  w-full sm:w-auto transition-all duration-300 ease-linear font-medium text-white rounded-lg group"
+            endContent={
+              <ArrowRight className="w-8 h-8 p-2 rounded-full text-black bg-white group-hover:opacity-60" />
+            }
           >
             <Link href={"/products"}>Discover Your Timepiece</Link>
           </Button>
@@ -33,8 +37,8 @@ const Hero = () => {
       <Image
         src="/hero.svg"
         alt="hero"
-        width={500}
-        height={500}
+        width={1920}
+        height={1080}
         className="w-full md:w-1/2 md:max-h-[400px]"
       />
     </main>
