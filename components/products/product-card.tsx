@@ -1,6 +1,6 @@
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import NextImage from "next/image";
-import Star from "./star";
+import Star from "../star";
 import Link from "next/link";
 import AddToCartButton from "./add-to-cart-button";
 

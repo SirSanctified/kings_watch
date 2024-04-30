@@ -3,7 +3,7 @@ import { Boxes, CreditCard, Headphones, Package } from "lucide-react";
 const WhyUs = () => {
   return (
     <section className="flex flex-col items-center justify-start gap-4 px-4 md:px-8 lg:px-24 w-full">
-      <div className="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 mb-6">
+      <div className="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 mt-12 mb-6">
         <div className="flex flex-col items-start justify-start gap-4">
           <Package size={48} />
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
