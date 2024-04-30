@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import React, { useState } from "react";
+import { Image } from "@nextui-org/react";
+import NextImage from "next/image";
+import { useState } from "react";
 
 const ProductImages = ({ imgSrcs }: { imgSrcs: string[] }) => {
   const [activeImage, setActiveImage] = useState(0);
@@ -9,6 +10,8 @@ const ProductImages = ({ imgSrcs }: { imgSrcs: string[] }) => {
     <div className="w-full md:w-1/2 flex flex-col gap-4">
       <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
         <Image
+          as={NextImage}
+          isZoomed
           className="rounded-lg h-80 object-contain"
           width={500}
           height={500}
@@ -24,7 +27,7 @@ const ProductImages = ({ imgSrcs }: { imgSrcs: string[] }) => {
             className="shrink-0 max-w-[24] cursor-pointer"
             onClick={() => setActiveImage(index)}
           >
-            <Image
+            <NextImage
               className="rounded-lg h-24 w-24 object-contain"
               width={500}
               height={500}

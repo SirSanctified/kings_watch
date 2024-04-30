@@ -1,7 +1,8 @@
+import { Button } from "@nextui-org/react";
+
 const FilteringSidebar = () => {
   return (
     <div className="flex flex-wrap gap-6">
-      {/* By Category */}
       <div className="w-auto md:w-full flex flex-col space-y-1">
         <label
           htmlFor="category"
@@ -56,6 +57,9 @@ const FilteringSidebar = () => {
           <option value="oldest">Oldest</option>
         </select>
       </div>
+      <Button className="w-full text-white text-lg font-semibold bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 rounded-lg px-5 py-2.5 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800 transition-all duration-300 ease-linear">
+        Apply Filters
+      </Button>
     </div>
   );
 };
