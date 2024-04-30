@@ -18,7 +18,7 @@ const CategoryCard = ({ name, imgSrc }: { name: string; imgSrc: string }) => {
           className="rounded-lg h-40 w-full object-cover"
         />
       </CardBody>
-      <CardFooter className="absolute flex items-end justify-center h-40 w-full bottom-0 bg-gradient-to-t from-black to-transparent">
+      <CardFooter className="absolute flex items-end justify-center h-40 w-full bottom-0 bg-gradient-to-t from-black to-transparent hover:from-yellow-700 transition-all duration-500 ease-linear">
         <h1 className="text-2xl font-bold text-white">{name}</h1>
       </CardFooter>
     </Card>

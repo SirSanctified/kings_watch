@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import NextThemeProvider from "@/components/theme-provider";
 import CustomNavbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
           <Providers>
             <CustomNavbar />
             {children}
+            <Footer />
           </Providers>
         </body>
       </NextThemeProvider>
