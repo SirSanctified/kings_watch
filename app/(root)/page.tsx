@@ -10,6 +10,7 @@ export type Product = {
   name: string;
   slug: string;
   image: string;
+  colors?: string[];
   extraImages?: string[];
   price: number;
   description: string;

@@ -12,7 +12,7 @@ const ProductImages = ({ imgSrcs }: { imgSrcs: string[] }) => {
         <Image
           as={NextImage}
           isZoomed
-          className="rounded-lg h-80 object-contain"
+          className="rounded-lg h-80 object-cover"
           width={500}
           height={500}
           src={imgSrcs[activeImage]}
@@ -28,7 +28,7 @@ const ProductImages = ({ imgSrcs }: { imgSrcs: string[] }) => {
             onClick={() => setActiveImage(index)}
           >
             <NextImage
-              className="rounded-lg h-24 w-24 object-contain"
+              className="rounded-lg h-24 w-24 object-cover"
               width={500}
               height={500}
               src={imgSrc}
