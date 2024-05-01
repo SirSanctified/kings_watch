@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { Providers } from "@/components/providers";
 import NextThemeProvider from "@/components/theme-provider";
 import CustomNavbar from "@/components/navbar";
