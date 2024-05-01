@@ -1,14 +1,23 @@
-import { Product } from "@/app/(root)/page";
+import { type Product } from "@/app/(root)/page";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface CartItem extends Product {
   quantity: number;
-  color: string;
+}
+
+export interface CartState {
+  cart: CartItem[];
+  cartTotal: number;
+  totalItems: number;
+  addToCart: (product: CartItem) => void;
+  removeFromCart: (productId: string) => void;
+  clearCart: () => void;
+  updateQuantity: (productId: string, quantity: number) => void;
 }
 
 export const useCartStore = create(
-  persist(
+  persist<CartState>(
     (set) => ({
       cart: [] as CartItem[],
       cartTotal: 0,
@@ -30,7 +39,7 @@ export const useCartStore = create(
             };
           }
           if (existingProductIndex !== -1) {
-            state.cart[existingProductIndex].quantity = newQuantity;
+            state.cart[existingProductIndex].quantity += 1;
             return {
               cart: [...state.cart],
               cartTotal: calculateCartTotal(state.cart),
@@ -53,7 +62,33 @@ export const useCartStore = create(
             totalItems: calculateTotalItems(newCart),
           };
         }),
+
+      clearCart: () =>
+        set((state: { cart: CartItem[] }) => {
+          return {
+            cart: [],
+            cartTotal: 0,
+            totalItems: 0,
+          };
+        }),
+
+      updateQuantity: (productId: string, quantity: number) =>
+        set((state: { cart: CartItem[] }) => {
+          const newCart = state.cart.map((item) => {
+            if (item._id === productId) {
+              item.quantity += quantity;
+              return item;
+            }
+            return item;
+          });
+          return {
+            cart: newCart,
+            cartTotal: calculateCartTotal(newCart),
+            totalItems: calculateTotalItems(newCart),
+          };
+        }),
     }),
+
     { name: "cart-storage", getStorage: () => localStorage }
   )
 );
@@ -63,5 +98,5 @@ function calculateCartTotal(cart: CartItem[]) {
 }
 
 function calculateTotalItems(cart: CartItem[]) {
-  return cart.reduce((total, item) => total + 1, 0);
+  return cart.reduce((total, item) => total + item.quantity, 0);
 }
