@@ -13,11 +13,13 @@ import { useState } from "react";
 import { ThemeSwitcher } from "./theme-switcher";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Truck } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useCartStore } from "@/context/cart-store";
 
 export default function CustomNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { totalItems } = useCartStore();
 
   const menuItems = [
     "Profile",
@@ -83,13 +85,18 @@ export default function CustomNavbar() {
             </Link>
           </NavbarItem>
         </SignedIn>
-        <NavbarItem>
+        <NavbarItem className="relative">
           <Link
             href="/cart"
             aria-current="page"
           >
             <ShoppingCart size={24} />
           </Link>
+          {totalItems > 0 && (
+            <span className="absolute top-0 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+              {totalItems}
+            </span>
+          )}
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
