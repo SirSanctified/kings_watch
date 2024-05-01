@@ -3,13 +3,26 @@ import Hero from "@/components/hero";
 import Categories from "@/components/products/categories";
 import FeaturedProducts from "@/components/products/featured-products";
 import WhyUs from "@/components/why-us";
+import { getProducts } from "@/sanity/product-utils";
 
-export default function Home() {
+export type Product = {
+  _id: string;
+  name: string;
+  slug: string;
+  image: string;
+  extraImages?: string[];
+  price: number;
+  description: string;
+  createdAt: string;
+};
+
+export default async function Home() {
+  const products: Product[] = await getProducts();
   return (
     <main className="flex min-h-screen space-y-8 flex-col bg-white dark:bg-gray-800">
       <Hero />
       <Categories />
-      <FeaturedProducts />
+      <FeaturedProducts products={products.slice(0, 4)} />
       <WhyUs />
       <CTA />
     </main>
