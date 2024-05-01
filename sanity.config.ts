@@ -1,6 +1,6 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
-import schemas from "./sanity";
+import schemas from "./sanity/schemas";
 
 export default defineConfig({
   name: "default",
