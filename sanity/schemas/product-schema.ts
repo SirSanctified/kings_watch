@@ -32,32 +32,6 @@ const product = {
       of: [{ type: "image" }],
     },
     {
-      name: "colors",
-      type: "array",
-      title: "Colors",
-      of: [
-        {
-          type: "string",
-          options: {
-            list: [
-              "red",
-              "blue",
-              "green",
-              "yellow",
-              "purple",
-              "black",
-              "white",
-              "gray",
-              "pink",
-              "brown",
-              "orange",
-              "lightblue",
-            ],
-          },
-        },
-      ],
-    },
-    {
       name: "description",
       type: "text",
       title: "Description",

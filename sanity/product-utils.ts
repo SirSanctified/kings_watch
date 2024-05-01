@@ -33,7 +33,6 @@ export async function getProductBySlug(slug: string) {
       "extraImages": extraImages[].asset->url,
       price,
       description,
-      colors,
     }`,
     { slug }
   );
