@@ -17,14 +17,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <NextThemeProvider system={false}>
-        <body
-          className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
-          suppressHydrationWarning
-        >
-          {children}
-        </body>
-      </NextThemeProvider>
+      <body suppressHydrationWarning>
+        <NextThemeProvider system={false}>
+          <div
+            className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
+          >
+            {children}
+          </div>
+        </NextThemeProvider>
+      </body>
     </html>
   );
 }

@@ -23,18 +23,19 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <NextThemeProvider>
-          <body
-            className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
-            suppressHydrationWarning
-          >
-            <Providers>
-              <CustomNavbar />
-              {children}
-              <Footer />
-            </Providers>
-          </body>
-        </NextThemeProvider>
+        <body suppressHydrationWarning>
+          <NextThemeProvider>
+            <div
+              className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
+            >
+              <Providers>
+                <CustomNavbar />
+                {children}
+                <Footer />
+              </Providers>
+            </div>
+          </NextThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
