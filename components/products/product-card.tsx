@@ -1,6 +1,5 @@
 import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import NextImage from "next/image";
-import Star from "../star";
 import Link from "next/link";
 import AddToCartButton from "./add-to-cart-button";
 import { formatCurrency } from "@/lib/utils";
@@ -26,7 +25,7 @@ const ProductCard = ({
           alt={name}
           width={300}
           height={200}
-          className="rounded-lg h-40 w-full object-cover"
+          className="rounded-lg h-48 w-full object-cover"
           loading="lazy"
         />
       </CardBody>
@@ -49,7 +48,9 @@ const ProductCard = ({
           >
             Learn More
           </Button>
-          <AddToCartButton />
+          <AddToCartButton
+            product={{ _id, name, image, price, description, createdAt, slug }}
+          />
         </div>
       </CardFooter>
     </Card>
