@@ -9,8 +9,11 @@ export default function Page() {
         alt="hero"
         width={500}
         height={500}
+        className="w-full h-full flex-1 hidden sm:block object-contain"
       />
-      <SignUp path="/sign-up" />
+      <div className="flex flex-col justify-center items-center flex-1">
+        <SignUp path="/sign-up" />
+      </div>
     </main>
   );
 }

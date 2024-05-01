@@ -14,6 +14,7 @@ import { ThemeSwitcher } from "./theme-switcher";
 import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, Truck } from "lucide-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function CustomNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -72,15 +73,17 @@ export default function CustomNavbar() {
             Products
           </Link>
         </NavbarItem>
+        <SignedIn>
+          <NavbarItem>
+            <Link
+              color="foreground"
+              href="/orders"
+            >
+              Orders
+            </Link>
+          </NavbarItem>
+        </SignedIn>
         <NavbarItem>
-          <Link
-            color="foreground"
-            href="/orders"
-          >
-            Orders
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
           <Link
             href="/cart"
             aria-current="page"
@@ -94,14 +97,20 @@ export default function CustomNavbar() {
           <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem>
-          <Button
-            size="md"
-            color="primary"
-            href="#"
-            variant="flat"
-          >
-            Log In
-          </Button>
+          <SignedOut>
+            <Button
+              as={Link}
+              size="md"
+              color="primary"
+              href="/sign-in"
+              variant="flat"
+            >
+              Log In
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
