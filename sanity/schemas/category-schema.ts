@@ -9,6 +9,7 @@ const category = {
       name: "name",
       title: "Category Name",
       type: "string",
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "slug",
@@ -18,11 +19,13 @@ const category = {
         source: "name",
         maxLength: 200,
       },
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "image",
       title: "Image",
       type: "image",
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
   ],
 };

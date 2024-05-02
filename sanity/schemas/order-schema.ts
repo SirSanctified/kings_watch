@@ -10,27 +10,35 @@ const order = {
       type: "reference",
       title: "Order For",
       to: [{ type: "user" }],
+      validation: (Rule: { required: () => any }) => Rule.required(),
+      options: {
+        filter: "_type == 'user'",
+      },
     },
     {
       name: "email",
       type: "string",
       title: "Email",
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "items",
       type: "array",
       title: "Items",
       of: [{ type: "reference", to: [{ type: "orderItem" }] }],
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "phone",
       type: "string",
       title: "Phone",
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "address",
       type: "string",
       title: "Address",
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "number",
@@ -48,15 +56,19 @@ const order = {
       },
     },
     {
-      name: "products",
-      type: "array",
-      title: "Products",
-      of: [{ type: "reference", to: [{ type: "product" }] }],
-    },
-    {
       name: "total",
       type: "number",
       title: "Total",
+      options: {
+        readonly: true,
+        min: 0,
+      },
+      initialValue: async () => {
+        const total = await client
+          .fetch(`*[_type == "order"] | map(.total) | add`)
+          .then((total: number) => total);
+        return total;
+      },
     },
     {
       name: "status",

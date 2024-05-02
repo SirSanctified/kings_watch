@@ -7,6 +7,7 @@ const user = {
       name: "name",
       type: "string",
       title: "Name",
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "clerkId",
@@ -18,6 +19,7 @@ const user = {
       name: "email",
       type: "string",
       title: "Email",
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "phoneNumber",
