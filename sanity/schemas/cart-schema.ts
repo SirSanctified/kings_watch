@@ -8,17 +8,23 @@ const cart = {
       type: "reference",
       title: "Product",
       to: [{ type: "product" }],
+      options: {
+        filter: "isPublished",
+      },
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "quantity",
       type: "number",
       title: "Quantity",
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "user",
       type: "reference",
       title: "User",
       to: [{ type: "user" }],
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "status",
@@ -31,6 +37,7 @@ const cart = {
           { title: "Canceled", value: "canceled" },
         ],
       },
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "createdAt",
