@@ -19,7 +19,7 @@ export interface CartState {
 export const useCartStore = create(
   persist<CartState>(
     (set) => ({
-      cart: [] as CartItem[],
+      cart: [],
       cartTotal: 0,
       totalItems: 0,
       addToCart: (product: CartItem) =>
