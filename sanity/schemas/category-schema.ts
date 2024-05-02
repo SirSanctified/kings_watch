@@ -1,5 +1,3 @@
-import { m } from "framer-motion";
-
 const category = {
   name: "category",
   title: "Category",

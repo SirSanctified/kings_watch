@@ -11,9 +11,6 @@ const order = {
       title: "Order For",
       to: [{ type: "user" }],
       validation: (Rule: { required: () => any }) => Rule.required(),
-      options: {
-        filter: "_type == 'user'",
-      },
     },
     {
       name: "email",
@@ -60,14 +57,7 @@ const order = {
       type: "number",
       title: "Total",
       options: {
-        readonly: true,
         min: 0,
-      },
-      initialValue: async () => {
-        const total = await client
-          .fetch(`*[_type == "order"] | map(.total) | add`)
-          .then((total: number) => total);
-        return total;
       },
     },
     {
