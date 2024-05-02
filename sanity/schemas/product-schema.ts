@@ -20,6 +20,12 @@ const product = {
       },
     },
     {
+      name: "category",
+      type: "array",
+      title: "Category",
+      of: [{ type: "reference", to: [{ type: "category" }] }],
+    },
+    {
       name: "image",
       type: "image",
       title: "Main Image",
@@ -49,8 +55,8 @@ const product = {
       title: "Created At",
       options: {
         dateFormat: "YYYY-MM-DDTHH:mm:ssZ",
+        readonly: true,
       },
-      readonly: true,
       initialValue: () => new Date().toISOString(),
     },
   ],
