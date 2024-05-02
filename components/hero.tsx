@@ -1,9 +1,11 @@
+import { getHomeImage } from "@/sanity/home-image-utils";
 import { Button } from "@nextui-org/react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const Hero = () => {
+export default async function Hero() {
+  const homeImage: { image: string } = await getHomeImage();
   return (
     <main className="flex flex-col lg:flex-row items-center justify-between gap-4 p-24 px-4 md:px-8 lg:px-24  w-full">
       <div className="w-full lg:w-1/2">
@@ -38,14 +40,12 @@ const Hero = () => {
         </div>
       </div>
       <Image
-        src="/hero.png"
+        src={homeImage.image || "/hero.png"}
         alt="hero"
         width={612}
         height={408}
-        className="w-full lg:w-1/2"
+        className="w-full lg:w-1/2 rounded-lg h-auto object-cover"
       />
     </main>
   );
-};
-
-export default Hero;
+}
