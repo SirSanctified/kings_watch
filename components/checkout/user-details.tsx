@@ -14,6 +14,7 @@ export default async function UserDetails() {
   return (
     <div>
       <DetailsForm
+        userId={sanityUser._id}
         name={sanityUser.name}
         email={sanityUser.email}
         phoneNumber={sanityUser.phoneNumber}

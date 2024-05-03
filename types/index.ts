@@ -10,18 +10,26 @@ export type OrderItem = {
   _id?: string;
   quantity: number;
   price: number;
+  name: string;
   total: number;
   product: Pick<Product, "name" | "image" | "price">;
 };
 
+export type CreateOrderItem = Omit<OrderItem, "product"> & {
+  product: { _type: "reference"; _ref: string };
+};
 export type Order = {
   _id?: string;
-  number: string;
+  name?: string;
+  number?: string;
   total: number;
+  email: string;
+  phone: string;
+  address: string;
   status: string;
-  createdAt: string;
-  items: string[];
-  user: string;
+  createdAt?: string;
+  items: { _type: "reference"; _ref: string }[];
+  user: { _type: "reference"; _ref: string };
 };
 
 export type PopulatedOrder = Order & { items: OrderItem[] };
