@@ -6,6 +6,7 @@ import { Providers } from "@/components/providers";
 import NextThemeProvider from "@/components/theme-provider";
 import CustomNavbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,17 @@ export default function RootLayout({
               className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
             >
               <Providers>
+                <Toaster
+                  position="top-right"
+                  toastOptions={{
+                    icon: "🔔",
+                    iconTheme: {
+                      primary: "yellow",
+                      secondary: "black",
+                    },
+                    className: "!bg-yellow-400 !text-black",
+                  }}
+                />
                 <CustomNavbar />
                 {children}
                 <Footer />

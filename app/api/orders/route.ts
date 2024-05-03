@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { client } from "@/sanity/product-utils";
 import { CreateOrderItem } from "@/types";
 import { createOrder } from "@/sanity/order-utils";
-import { redirect } from "next/navigation";
 
 export async function POST(req: Request) {
   try {
@@ -25,9 +24,11 @@ export async function POST(req: Request) {
     );
     if (orderItems) {
       const order = await createOrder({
+        name: userDetails.name,
         items: orderItems.map((item) => ({
           _type: "reference",
           _ref: item._id,
+          _key: item._id,
         })),
         status: "pending",
         total: orderTotal,
