@@ -25,3 +25,11 @@ export type Order = {
 };
 
 export type PopulatedOrder = Order & { items: OrderItem[] };
+
+export type SanityUser = {
+  _id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+};
