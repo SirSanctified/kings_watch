@@ -4,7 +4,7 @@ import { useCartStore } from "@/context/cart-store";
 import { formatCurrency } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
-const CartOrderSummary = () => {
+const CartOrderSummary = ({ deliveryFee = 0, page = "cart" }) => {
   const { cartTotal } = useCartStore();
   const router = useRouter();
   return (
@@ -29,10 +29,10 @@ const CartOrderSummary = () => {
 
           <dl className="flex items-center justify-between gap-4">
             <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-              Shipping
+              Delivery
             </dt>
             <dd className="text-base font-medium text-gray-900 dark:text-white">
-              {cartTotal > 0 ? formatCurrency(5) : "$0.00"}
+              {deliveryFee > 0 ? formatCurrency(deliveryFee) : "Free"}
             </dd>
           </dl>
 
@@ -51,18 +51,20 @@ const CartOrderSummary = () => {
             Total
           </dt>
           <dd className="text-base font-bold text-gray-900 dark:text-white">
-            {cartTotal > 0 ? formatCurrency(cartTotal + 5) : "$0.00"}
+            {formatCurrency(cartTotal + deliveryFee)}
           </dd>
         </dl>
       </div>
-      <button
-        onClick={() => router.push("/checkout")}
-        title="Checkout"
-        disabled={cartTotal === 0}
-        className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:focus:bg-gray-400 disabled:text-black disabled:dark:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-70"
-      >
-        Proceed to Checkout
-      </button>
+      {page === "cart" && (
+        <button
+          onClick={() => router.push("/checkout")}
+          title="Checkout"
+          disabled={cartTotal === 0}
+          className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:focus:bg-gray-400 disabled:text-black disabled:dark:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          Proceed to Checkout
+        </button>
+      )}
     </>
   );
 };
