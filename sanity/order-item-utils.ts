@@ -1,6 +1,8 @@
+"use server";
+
 import { groq } from "next-sanity";
 import { client } from "./product-utils";
-import { OrderItem } from "@/types";
+import { CreateOrderItem, OrderItem } from "@/types";
 
 export async function getOrderItemsByIds(ids: string[]) {
   return await client.fetch(
@@ -30,14 +32,24 @@ export async function getOrderItemsByOrderId(orderId: string) {
   );
 }
 
-export async function createOrderItem(orderItem: OrderItem) {
-  return await client.create({
-    _type: "orderItem",
-    ...orderItem,
-  });
+export async function createOrderItem(
+  orderItem: CreateOrderItem
+): Promise<CreateOrderItem> {
+  try {
+    console.log(orderItem);
+    const result = await client.create({
+      _type: "orderItem",
+      ...orderItem,
+    });
+    return result;
+  } catch (error) {
+    throw new Error("Failed to create order item");
+  }
 }
 
-export async function createManyOrderItems(orderItems: OrderItem[]) {
+export async function createManyOrderItems(
+  orderItems: CreateOrderItem[]
+): Promise<CreateOrderItem[]> {
   return await Promise.all(
     orderItems.map((orderItem) => createOrderItem(orderItem))
   );

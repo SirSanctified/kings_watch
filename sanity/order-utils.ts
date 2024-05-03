@@ -1,3 +1,5 @@
+"use server";
+
 import { groq } from "next-sanity";
 import { client } from "./product-utils";
 import { Order, PopulatedOrder } from "@/types";
