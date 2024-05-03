@@ -1,17 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { RadioGroup, Radio } from "@nextui-org/react";
+import { RadioGroup, Radio, Spinner } from "@nextui-org/react";
 import CartOrderSummary from "../cart/order-summary";
 import FloatingInput from "../ui/floating-input";
 import FloatingTextArea from "../ui/floating-autoheight-textarea";
+import { useCartStore } from "@/context/cart-store";
+import { CreateOrderItem } from "@/types";
+import { useRouter } from "next/navigation";
 
 const DetailsForm = ({
+  userId,
   name,
   email,
   phoneNumber,
   address,
 }: {
+  userId: string;
   name: string;
   email: string;
   phoneNumber: string;
@@ -20,6 +25,9 @@ const DetailsForm = ({
   const [user, setUser] = useState({ name, email, phoneNumber, address });
   const [selectedFee, setSelectedFee] = useState(0);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("EcoCash");
+  const [loading, setLoading] = useState(false);
+  const { cart, cartTotal } = useCartStore();
+  const router = useRouter();
 
   const distances = [
     { label: "Within Harare CBD (Free)", value: 0 },
@@ -31,8 +39,49 @@ const DetailsForm = ({
   ) => {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const rawOrderItems: CreateOrderItem[] = cart.map((product) => ({
+        product: { _type: "reference", _ref: product._id },
+        quantity: product.quantity,
+        price: product.price,
+        name: product.name,
+        image: product.image,
+        total: product.price * product.quantity,
+      }));
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rawOrderItems,
+          orderTotal: cartTotal + selectedFee,
+          userId,
+          userDetails: {
+            name: user.name,
+            email: user.email,
+            phone: user.phoneNumber,
+            address: user.address,
+          },
+        }),
+      });
+      if (response.ok) {
+        const order = await response.json();
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form className="max-w-3xl lg:mx-auto">
+    <form
+      className="max-w-3xl lg:mx-auto"
+      onSubmit={handleSubmit}
+    >
       <legend className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
         Personal Details
       </legend>
@@ -130,9 +179,16 @@ const DetailsForm = ({
           type="submit"
           className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg block text-sm w-full sm:max-w-sm mx-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
         >
-          {selectedPaymentMethod === "EcoCash"
-            ? "Pay with EcoCash"
-            : "Place Order"}
+          {!loading && selectedPaymentMethod === "EcoCash" ? (
+            "Pay with EcoCash"
+          ) : !loading && selectedPaymentMethod === "Cash On Delivery" ? (
+            "Place Order"
+          ) : (
+            <Spinner
+              size="sm"
+              color="white"
+            />
+          )}
         </button>
       </div>
     </form>
