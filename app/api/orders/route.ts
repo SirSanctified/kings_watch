@@ -36,6 +36,7 @@ export async function POST(req: Request) {
         address: userDetails.address,
         phone: userDetails.phone,
         user: { _type: "reference", _ref: userId },
+        createdAt: new Date().toISOString(),
       });
       await client
         .patch(userId)

@@ -34,6 +34,27 @@ export type Order = {
 
 export type PopulatedOrder = Order & { items: OrderItem[] };
 
+export type FetchedOrder = {
+  _id: string;
+  number: string;
+  total: number;
+  status: string;
+  createdAt: string;
+  items: {
+    _id: string;
+    quantity: number;
+    price: number;
+    name: string;
+    total: number;
+    product: {
+      _id: string;
+      slug: string;
+      name: string;
+      image: string;
+      price: number;
+    };
+  }[];
+};
 export type SanityUser = {
   _id: string;
   name: string;

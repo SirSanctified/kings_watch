@@ -75,7 +75,6 @@ const order = {
       title: "Created At",
       options: {
         dateFormat: "YYYY-MM-DDTHH:mm:ssZ",
-        readonly: true,
       },
       initialValue: () => new Date().toISOString(),
     },
