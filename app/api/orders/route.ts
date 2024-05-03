@@ -36,6 +36,14 @@ export async function POST(req: Request) {
         phone: userDetails.phone,
         user: { _type: "reference", _ref: userId },
       });
+      await client
+        .patch(userId)
+        .set({
+          email: userDetails.email,
+          phone: userDetails.phone,
+          address: userDetails.address,
+        })
+        .commit();
       return NextResponse.json(order);
     }
   } catch (error) {

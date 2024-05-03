@@ -26,7 +26,7 @@ const DetailsForm = ({
   const [selectedFee, setSelectedFee] = useState(0);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("EcoCash");
   const [loading, setLoading] = useState(false);
-  const { cart, cartTotal } = useCartStore();
+  const { cart, cartTotal, clearCart } = useCartStore();
   const router = useRouter();
 
   const distances = [
@@ -70,7 +70,8 @@ const DetailsForm = ({
         }),
       });
       if (response.ok) {
-        const order = await response.json();
+        clearCart();
+        router.push("/orders");
       }
     } catch (error) {
     } finally {
