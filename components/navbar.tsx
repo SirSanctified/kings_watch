@@ -21,19 +21,6 @@ export default function CustomNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { totalItems } = useCartStore();
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
-
   return (
     <Navbar
       isBordered
@@ -100,6 +87,19 @@ export default function CustomNavbar() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
+        <NavbarItem className="relative sm:hidden">
+          <Link
+            href="/cart"
+            aria-current="page"
+          >
+            <ShoppingCart size={24} />
+          </Link>
+          {totalItems > 0 && (
+            <span className="absolute top-0 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+              {totalItems}
+            </span>
+          )}
+        </NavbarItem>
         <NavbarItem className="flex items-center justify-center">
           <ThemeSwitcher />
         </NavbarItem>
@@ -120,27 +120,16 @@ export default function CustomNavbar() {
           </SignedIn>
         </NavbarItem>
       </NavbarContent>
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem
-            key={`${item}-${index}`}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
-              }
-              className="w-full"
-              href="#"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+      <NavbarMenu className="text-foreground">
+        <NavbarMenuItem onClick={() => setIsMenuOpen(false)}>
+          <Link href={"/products"}>Products</Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem onClick={() => setIsMenuOpen(false)}>
+          <Link href={"/orders"}>Orders</Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem onClick={() => setIsMenuOpen(false)}>
+          <Link href={"/cart"}>Cart</Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   );
