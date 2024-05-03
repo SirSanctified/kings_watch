@@ -8,6 +8,7 @@ import FloatingTextArea from "../ui/floating-autoheight-textarea";
 import { useCartStore } from "@/context/cart-store";
 import { CreateOrderItem } from "@/types";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const DetailsForm = ({
   userId,
@@ -49,7 +50,6 @@ const DetailsForm = ({
         quantity: product.quantity,
         price: product.price,
         name: product.name,
-        image: product.image,
         total: product.price * product.quantity,
       }));
       const response = await fetch("/api/orders", {
@@ -74,6 +74,7 @@ const DetailsForm = ({
         router.push("/orders");
       }
     } catch (error) {
+      toast.error("Something went wrong, please try again");
     } finally {
       setLoading(false);
     }
