@@ -16,7 +16,7 @@ export type OrderItem = {
 };
 
 export type CreateOrderItem = Omit<OrderItem, "product"> & {
-  product: { _type: "reference"; _ref: string };
+  product: { _type: "reference"; _ref: string; _key?: string };
 };
 export type Order = {
   _id?: string;
