@@ -6,15 +6,19 @@ import React from "react";
 import { Product } from "../page";
 import CartItems from "@/components/cart/cart-items";
 import CartOrderSummary from "@/components/cart/order-summary";
+import ClearCart from "@/components/cart/clear-cart";
 
 export default async function CartPage() {
   const products: Product[] = await getProducts();
   return (
     <main className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
-          Shopping Cart
-        </h2>
+        <div className="w-full flex justify-between items-center gap-4">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
+            Shopping Cart
+          </h2>
+          <ClearCart />
+        </div>
 
         <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
           <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
