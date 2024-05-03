@@ -5,10 +5,15 @@ const orderItem = {
   hidden: true,
   fields: [
     {
+      name: "name",
+      type: "string",
+      title: "Name",
+    },
+    {
       name: "product",
       type: "reference",
       title: "Product",
-      to: [{ type: "product" }],
+      to: [{ type: "product", weak: true }],
     },
     {
       name: "quantity",
@@ -24,6 +29,14 @@ const orderItem = {
       name: "total",
       type: "number",
       title: "Total",
+    },
+    {
+      name: "image",
+      type: "image",
+      title: "Image",
+      options: {
+        hotspot: true,
+      },
     },
   ],
 };

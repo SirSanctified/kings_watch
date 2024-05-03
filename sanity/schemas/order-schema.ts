@@ -1,28 +1,25 @@
-import { client } from "../product-utils";
-
 const order = {
   name: "order",
   type: "document",
   title: "Order",
   fields: [
     {
+      name: "name",
+      type: "string",
+      title: "Name",
+      validation: (Rule: { required: () => any }) => Rule.required(),
+    },
+    {
       name: "user",
       type: "reference",
       title: "Order For",
-      to: [{ type: "user" }],
+      to: [{ type: "user", weak: true }],
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
       name: "email",
       type: "string",
       title: "Email",
-      validation: (Rule: { required: () => any }) => Rule.required(),
-    },
-    {
-      name: "items",
-      type: "array",
-      title: "Items",
-      of: [{ type: "reference", to: [{ type: "orderItem" }] }],
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
@@ -38,24 +35,23 @@ const order = {
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
-      name: "number",
-      type: "number",
-      title: "Order Number",
-      options: {
-        min: 0,
-        readonly: true,
-      },
-      initialValue: async () => {
-        const count = await client
-          .fetch(`*[_type == "order"] | length`)
-          .then((count: number) => count + 1);
-        return count;
-      },
+      name: "items",
+      type: "array",
+      title: "Items",
+      of: [{ type: "reference", to: [{ type: "orderItem", weak: true }] }],
+      validation: (Rule: { min: (arg0: number) => any }) =>
+        Rule.min(1).error("Order must have at least one item"),
     },
     {
       name: "total",
       type: "number",
       title: "Total",
+      validation: (Rule: { required: () => any }) => Rule.required(),
+    },
+    {
+      name: "number",
+      type: "number",
+      title: "Order Number",
       options: {
         min: 0,
       },
