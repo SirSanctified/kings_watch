@@ -55,6 +55,7 @@ const order = {
       options: {
         min: 0,
       },
+      initialValue: () => Math.floor(Math.random() * 100000),
     },
     {
       name: "status",
