@@ -8,11 +8,12 @@ const CTA = () => {
       <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
         <div className="mx-auto max-w-screen-sm text-center">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-gray-900 dark:text-white">
-            Find Your Perfect Watch Today
+            Shop Now & Enjoy Nationwide Delivery
           </h2>
           <p className="mb-6 font-light text-gray-700 dark:text-gray-400 md:text-lg">
-            Free nationwide delivery and flexible payment options make finding
-            your perfect watch easier than ever.
+            Upgrade your everyday essentials. Shop our collection of premium
+            watches, handcrafted belts, and luxurious wallets. Enjoy nationwide
+            delivery, starting from just $5 (free within Harare CBD).
           </p>
           <Link
             href="/products"
