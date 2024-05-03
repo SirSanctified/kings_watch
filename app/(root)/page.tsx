@@ -7,6 +7,7 @@ import { getProducts } from "@/sanity/product-utils";
 
 export type Product = {
   _id: string;
+  _ref?: string;
   name: string;
   slug: string;
   image: string;
