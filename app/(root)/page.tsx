@@ -19,7 +19,7 @@ export type Product = {
 };
 
 export default async function Home() {
-  const products: Product[] = await getProducts("", 0, "newest");
+  const products = await getProducts("", 0, "newest");
   return (
     <main className="flex min-h-screen space-y-8 flex-col bg-white dark:bg-gray-800">
       <Hero />

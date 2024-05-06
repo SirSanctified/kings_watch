@@ -3,13 +3,12 @@ import { getProducts } from "@/sanity/product-utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { Product } from "../page";
 import CartItems from "@/components/cart/cart-items";
 import CartOrderSummary from "@/components/cart/order-summary";
 import ClearCart from "@/components/cart/clear-cart";
 
 export default async function CartPage() {
-  const products: Product[] = await getProducts();
+  const products = await getProducts("", 0, "newest");
   return (
     <main className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -30,7 +29,7 @@ export default async function CartPage() {
                 People also bought
               </h3>
               <div className="mt-6 grid grid-cols-3 gap-4 sm:mt-8">
-                {products.slice(0, 3).map((product) => (
+                {products.slice(0, 4).map((product) => (
                   <ProductCard
                     key={product._id}
                     {...product}
