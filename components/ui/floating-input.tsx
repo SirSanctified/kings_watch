@@ -12,6 +12,8 @@ const FloatingInput = ({
   id,
   name,
   required,
+  readOnly = false,
+  min,
 }: {
   className?: string;
   labelClassName?: string;
@@ -24,6 +26,8 @@ const FloatingInput = ({
   id?: string;
   name?: string;
   required?: boolean;
+  readOnly?: boolean;
+  min?: number | string | undefined;
 }) => {
   return (
     <div className={cn("relative z-0 w-full group", className)}>
@@ -39,6 +43,8 @@ const FloatingInput = ({
         required={required}
         value={value}
         onChange={onChange}
+        readOnly={readOnly}
+        min={min}
       />
       <label
         htmlFor={id}
