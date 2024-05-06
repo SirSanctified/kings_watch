@@ -71,6 +71,19 @@ const order = {
       },
     },
     {
+      name: "paymentStatus",
+      type: "string",
+      title: "Payment Status",
+      options: {
+        list: [
+          { title: "Cash on delivery", value: "pending" },
+          { title: "Paid", value: "paid" },
+          { title: "Failed", value: "failed" },
+        ],
+      },
+      initialValue: "pending",
+    },
+    {
       name: "createdAt",
       type: "datetime",
       title: "Created At",
