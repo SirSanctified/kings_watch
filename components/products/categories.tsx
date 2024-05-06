@@ -12,6 +12,7 @@ export default async function Categories() {
       <div className="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 mb-6">
         {categories.map((category) => (
           <CategoryCard
+            _id={category._id}
             key={category.slug}
             name={category.name}
             imgSrc={category.image}

@@ -2,12 +2,20 @@ import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 
-const CategoryCard = ({ name, imgSrc }: { name: string; imgSrc: string }) => {
+const CategoryCard = ({
+  _id,
+  name,
+  imgSrc,
+}: {
+  _id: string;
+  name: string;
+  imgSrc: string;
+}) => {
   return (
     <Card
       className="shadow dark:bg-gray-700 relative p-0"
       as={Link}
-      href={`/products?category=${name}`}
+      href={`/products?category=${_id}`}
     >
       <CardBody>
         <Image
