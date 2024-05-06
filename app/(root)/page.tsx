@@ -13,6 +13,7 @@ export type Product = {
   image: string;
   extraImages?: string[];
   price: number;
+  stock: number;
   description: string;
   createdAt: string;
 };

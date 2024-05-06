@@ -39,7 +39,10 @@ export const useCartStore = create(
             };
           }
           if (existingProductIndex !== -1) {
-            state.cart[existingProductIndex].quantity += 1;
+            const newCart = state.cart.filter(
+              (item) => item._id !== product._id
+            );
+            state.cart = newCart;
             return {
               cart: [...state.cart],
               cartTotal: calculateCartTotal(state.cart),
