@@ -1,3 +1,4 @@
+import { create } from "zustand";
 import { Product } from "@/app/(root)/page";
 
 export type Category = {
@@ -61,4 +62,26 @@ export type SanityUser = {
   email: string;
   phoneNumber: string;
   address: string;
+};
+
+export type PreOrder = {
+  _id: string;
+  name: string;
+  quantity: number;
+  createdAt: string;
+  price: number;
+  total: number;
+  product: Pick<Product, "name" | "image" | "price">;
+  slug: string;
+};
+
+export type CreatePreOrder = Omit<PreOrder, "product" | "_id" | "slug"> & {
+  product: { _type: "reference"; _ref: string };
+  customer: { _type: "reference"; _ref: string };
+  paymentStatus: string;
+  email: string;
+  phone: string;
+  address: string;
+  createdAt: string;
+  status: string;
 };

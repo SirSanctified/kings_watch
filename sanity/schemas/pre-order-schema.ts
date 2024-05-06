@@ -60,7 +60,7 @@ const preOrder = {
       title: "Payment Status",
       options: {
         list: [
-          { title: "Cash on delivery", value: "pending" },
+          { title: "Pending (Cash on delivery)", value: "pending" },
           { title: "Paid", value: "paid" },
           { title: "Failed", value: "failed" },
         ],
