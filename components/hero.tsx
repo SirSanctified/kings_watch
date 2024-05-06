@@ -45,6 +45,7 @@ export default async function Hero() {
         alt="hero"
         width={612}
         height={408}
+        priority
         className="w-full lg:w-1/2 rounded-lg h-auto object-cover"
       />
     </main>
