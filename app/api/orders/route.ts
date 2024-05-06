@@ -18,9 +18,14 @@ export async function POST(req: Request) {
     } = await req.json();
     const { rawOrderItems, orderTotal, userId, userDetails } = body;
     const orderItems = await Promise.all(
-      rawOrderItems.map((orderItem) =>
-        client.create({ _type: "orderItem", ...orderItem })
-      )
+      rawOrderItems.map((orderItem) => {
+        const item = client.create({ _type: "orderItem", ...orderItem });
+        client
+          .patch(orderItem.product._ref)
+          .dec({ stock: orderItem.quantity })
+          .commit();
+        return item;
+      })
     );
     if (orderItems) {
       const order = await createOrder({
