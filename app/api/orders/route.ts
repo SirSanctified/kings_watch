@@ -48,7 +48,7 @@ export async function POST(req: Request) {
         .patch(userId)
         .set({
           email: userDetails.email,
-          phone: userDetails.phone,
+          phoneNumber: userDetails.phone,
           address: userDetails.address,
         })
         .commit();

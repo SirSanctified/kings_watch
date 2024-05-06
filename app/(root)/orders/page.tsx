@@ -4,7 +4,7 @@ import { getOrdersByUserId } from "@/sanity/order-utils";
 import { getPreOrders } from "@/sanity/pre-oder-utils";
 import { PreOrder } from "@/types";
 import { currentUser } from "@clerk/nextjs/server";
-import {  formatDistanceToNowStrict } from "date-fns";
+import { formatDistanceToNowStrict } from "date-fns";
 
 const OrdersPage = async () => {
   const user = await currentUser();
