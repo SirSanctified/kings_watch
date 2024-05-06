@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { client } from "@/sanity/product-utils";
 import { CreateOrderItem } from "@/types";
 import { createOrder } from "@/sanity/order-utils";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -51,6 +52,9 @@ export async function POST(req: Request) {
           address: userDetails.address,
         })
         .commit();
+      revalidatePath("/orders");
+      revalidatePath("/products");
+      revalidatePath("/");
       return NextResponse.json(order);
     }
   } catch (error) {
