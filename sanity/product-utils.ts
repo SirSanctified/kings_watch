@@ -8,9 +8,26 @@ export const client = createClient({
   token: process.env.SANITY_API_TOKEN,
 });
 
-export async function getProducts() {
+export async function getProducts(
+  category: string,
+  price: number,
+  sortBy: string
+) {
+  const sortByFilter = sortBy ? sortBy : "newest";
+  let queryFilter = "";
+  if (category === "" && price === 0) {
+    queryFilter = '_type == "product"';
+  } else if (category !== "" && price === 0) {
+    queryFilter = `_type == "product" && references('${category}')`;
+  } else if (category === "" && price !== 0) {
+    queryFilter = `_type == "product" && price <= ${price}`;
+  } else {
+    queryFilter = `_type == "product" && price <= ${price} && references('${category}')`;
+  }
   return await client.fetch(
-    groq`*[_type == "product"] {
+    groq`*[${queryFilter}] | order(createdAt ${
+      sortByFilter === "oldest" ? "asc" : "desc"
+    }) {
       _id,
       name,
       "slug": slug.current,
@@ -19,7 +36,14 @@ export async function getProducts() {
       stock,
       description,
       createdAt,
-    }`
+    }`,
+    {
+      queryFilter,
+      sortByFilter,
+    },
+    {
+      next: { revalidate: 3600 },
+    }
   );
 }
 
@@ -36,6 +60,9 @@ export async function getProductBySlug(slug: string) {
       stock,
       description,
     }`,
-    { slug }
+    { slug },
+    {
+      next: { revalidate: 3600 },
+    }
   );
 }
