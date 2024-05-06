@@ -16,16 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning>
-        <NextThemeProvider system={false}>
-          <div
-            className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
-          >
-            {children}
-          </div>
-        </NextThemeProvider>
-      </body>
-    </html>
+    <div
+      className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
+    >
+      {children}
+    </div>
   );
 }

@@ -22,33 +22,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body suppressHydrationWarning>
-          <NextThemeProvider>
-            <div
-              className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
-            >
-              <Providers>
-                <Toaster
-                  position="top-right"
-                  toastOptions={{
-                    icon: "🔔",
-                    iconTheme: {
-                      primary: "yellow",
-                      secondary: "black",
-                    },
-                    className: "!bg-yellow-400 !text-black",
-                  }}
-                />
-                <CustomNavbar />
-                {children}
-                <Footer />
-              </Providers>
-            </div>
-          </NextThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <div
+      className={`${inter.className} text-foreground bg-white dark:bg-gray-800`}
+    >
+      <Providers>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            icon: "🔔",
+            iconTheme: {
+              primary: "yellow",
+              secondary: "black",
+            },
+            className: "!bg-yellow-400 !text-black",
+          }}
+        />
+        <CustomNavbar />
+        {children}
+        <Footer />
+      </Providers>
+    </div>
   );
 }
