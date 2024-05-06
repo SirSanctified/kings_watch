@@ -5,6 +5,8 @@ import AddToCartButton from "./add-to-cart-button";
 import { cn, formatCurrency } from "@/lib/utils";
 import { Tag } from "lucide-react";
 import { type Product } from "@/app/(root)/page";
+import PreOrderButtom from "./pre-order-button";
+import PreOrderButton from "./pre-order-button";
 
 const ProductCard = ({
   _id,
@@ -46,6 +48,11 @@ const ProductCard = ({
             {stock > 0 ? `${stock} left` : "Out of stock"}
           </p>
         </div>
+        {stock === 0 && (
+          <p className="text-green-800 text-lg font-semibold w-full">
+            🔥 {10}% off on pre-order
+          </p>
+        )}
         <p className="text-gray-500 line-clamp-1 mb-4 dark:text-gray-400">
           {description}
         </p>
@@ -73,7 +80,18 @@ const ProductCard = ({
               }}
             />
           ) : (
-            <Button>Pre-Oder</Button>
+            <PreOrderButton
+              product={{
+                _id,
+                name,
+                image,
+                price,
+                stock,
+                description,
+                createdAt,
+                slug,
+              }}
+            />
           )}
         </div>
       </CardFooter>

@@ -16,8 +16,12 @@ const ProductDetails = ({ product }: { product: Product }) => {
       <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
         <AddProductToCart product={product} />
       </div>
-
-      <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+      {product.stock === 0 && (
+        <p className="text-green-800 dark:text-green-500 mt-6 text-lg font-semibold w-full">
+          🔥 {10}% off on pre-order
+        </p>
+      )}
+      <hr className="my-6 md:my-8 border-gray-500 dark:border-gray-300" />
 
       <p className="mb-6 text-gray-500 dark:text-gray-400">
         {product.description}
