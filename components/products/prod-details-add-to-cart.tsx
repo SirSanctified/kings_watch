@@ -2,7 +2,7 @@
 
 import { Product } from "@/app/(root)/page";
 import { useCartStore } from "@/context/cart-store";
-import PreOrderButton from "./pre-order-button";
+import PreOrderModal from "./pre-order-modal";
 
 const AddProductToCart = ({ product }: { product: Product }) => {
   const { addToCart } = useCartStore();
@@ -34,7 +34,7 @@ const AddProductToCart = ({ product }: { product: Product }) => {
           Add to cart
         </button>
       ) : (
-        <PreOrderButton product={product} />
+        <PreOrderModal product={product} />
       )}
     </>
   );

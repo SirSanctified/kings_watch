@@ -5,8 +5,7 @@ import AddToCartButton from "./add-to-cart-button";
 import { cn, formatCurrency } from "@/lib/utils";
 import { Tag } from "lucide-react";
 import { type Product } from "@/app/(root)/page";
-import PreOrderButtom from "./pre-order-button";
-import PreOrderButton from "./pre-order-button";
+import PreOrderModal from "./pre-order-modal";
 
 const ProductCard = ({
   _id,
@@ -80,7 +79,7 @@ const ProductCard = ({
               }}
             />
           ) : (
-            <PreOrderButton
+            <PreOrderModal
               product={{
                 _id,
                 name,
