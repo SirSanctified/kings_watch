@@ -16,6 +16,7 @@ export async function getProducts() {
       "slug": slug.current,
       "image": image.asset->url,
       price,
+      stock,
       description,
       createdAt,
     }`
@@ -32,6 +33,7 @@ export async function getProductBySlug(slug: string) {
       "image": image.asset->url,
       "extraImages": extraImages[].asset->url,
       price,
+      stock,
       description,
     }`,
     { slug }

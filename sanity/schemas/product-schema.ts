@@ -50,6 +50,12 @@ const product = {
       validation: (Rule: { required: () => any }) => Rule.required().min(0),
     },
     {
+      name: "stock",
+      type: "number",
+      title: "Quantity in Stock",
+      validation: (Rule: { required: () => any }) => Rule.required().min(0),
+    },
+    {
       name: "createdAt",
       type: "datetime",
       title: "Created At",
