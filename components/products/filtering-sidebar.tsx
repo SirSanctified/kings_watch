@@ -42,7 +42,7 @@ const FilteringSidebar = ({
 
   return (
     <div className="flex flex-wrap gap-6">
-      <div className="w-auto md:w-full flex flex-col space-y-1">
+      <div className="w-full sm:w-auto md:w-full flex flex-col space-y-1">
         <label
           htmlFor="category"
           className="text-lg font-medium text-gray-800 dark:text-white"
@@ -54,7 +54,7 @@ const FilteringSidebar = ({
           name="category"
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="max-w-40 md:max-w-md w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="sm:max-w-40 md:max-w-md w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="">All</option>
           {categories.map((category) => (
@@ -67,7 +67,7 @@ const FilteringSidebar = ({
           ))}
         </select>
       </div>
-      <div className="w-auto md:w-full flex flex-col space-y-1">
+      <div className="w-full sm:w-auto md:w-full flex flex-col space-y-1">
         <label
           htmlFor="price"
           className="text-lg font-medium text-gray-800 dark:text-white"
@@ -85,10 +85,10 @@ const FilteringSidebar = ({
           onChange={(e) => setPriceFilter(Number(e.target.value))}
           max="200"
           step="10"
-          className="max-w-40 md:max-w-md w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="sm:max-w-40 md:max-w-md w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
-      <div className="w-auto md:w-full flex flex-col space-y-1">
+      <div className="w-full sm:w-auto md:w-full flex flex-col space-y-1">
         <label
           htmlFor="sorting"
           className="text-lg font-medium text-gray-800 dark:text-white"
@@ -100,7 +100,7 @@ const FilteringSidebar = ({
           name="sorting"
           value={sortByFilter}
           onChange={(e) => setSortByFilter(e.target.value)}
-          className="max-w-40 md:max-w-md w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="sm:max-w-40 md:max-w-md w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>

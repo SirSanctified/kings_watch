@@ -4,7 +4,11 @@ import ProductsContainer from "@/components/products/products-container";
 const ProductsListingPage = ({
   searchParams,
 }: {
-  searchParams?: { category?: string; price?: number; sortBy?: string };
+  searchParams?: {
+    category?: string;
+    price?: number;
+    sortBy?: string;
+  };
 }) => {
   const { category, price, sortBy } = searchParams || {};
   return (

@@ -1,3 +1,4 @@
+import { Product } from "@/app/(root)/page";
 import { createClient, groq } from "next-sanity";
 
 export const client = createClient({
@@ -12,9 +13,10 @@ export async function getProducts(
   category: string,
   price: number,
   sortBy: string
-) {
+): Promise<Product[]> {
   const sortByFilter = sortBy ? sortBy : "newest";
   let queryFilter = "";
+
   if (category === "" && price === 0) {
     queryFilter = '_type == "product"';
   } else if (category !== "" && price === 0) {

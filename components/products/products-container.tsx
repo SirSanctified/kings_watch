@@ -1,4 +1,3 @@
-import { Product } from "@/app/(root)/page";
 import FilteringSidebar from "./filtering-sidebar";
 import ProductsListings from "./product-listings";
 import { getProducts } from "@/sanity/product-utils";
@@ -14,7 +13,7 @@ export default async function ProductsContainer({
   price?: number;
   sortBy?: string;
 }) {
-  const products: Product[] = await getProducts(
+  const products = await getProducts(
     category ?? "",
     price ?? 0,
     sortBy ?? "newest"
@@ -31,7 +30,7 @@ export default async function ProductsContainer({
           sortBy={sortBy}
         />
       </div>
-      <div className="md:w-2/3 lg:w-3/4 flex flex-col w-full items-start justify-start">
+      <div className="md:w-2/3 lg:w-3/4 flex flex-col space-y-4 w-full items-start justify-start">
         <ProductsListings products={products} />
       </div>
     </div>
