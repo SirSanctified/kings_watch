@@ -72,6 +72,7 @@ export type PreOrder = {
   createdAt: string;
   price: number;
   total: number;
+  status: string;
   product: Pick<Product, "name" | "image" | "price">;
   slug: string;
 };

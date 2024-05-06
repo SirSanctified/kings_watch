@@ -9,7 +9,7 @@ export async function getOrdersByUserId(
   userId: string
 ): Promise<FetchedOrder[]> {
   return await client.fetch(
-    groq`*[_type == "order" && user._ref == $userId]{
+    groq`*[_type == "order" && user._ref == $userId] | order(createdAt desc) {
             _id,
             createdAt,
             total,
