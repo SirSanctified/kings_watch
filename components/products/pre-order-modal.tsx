@@ -35,7 +35,6 @@ const PreOrderModal = ({ product }: { product: Product }) => {
   const [quantity, setQuantity] = useState(1);
   const [orderTotal, setOrderTotal] = useState(product.price * quantity);
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("EcoCash");
   const [selectedFee, setSelectedFee] = useState(0);
   const [loading, setLoading] = useState(false);
   const [processingPayment, setProcessingPayment] = useState(false);
@@ -89,44 +88,49 @@ const PreOrderModal = ({ product }: { product: Product }) => {
       createdAt: new Date().toISOString(),
     };
     try {
-      if (selectedPaymentMethod === "EcoCash") {
-        setProcessingPayment(true);
-        const res = await fetch(process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: orderTotal + selectedFee,
-            auth_email: "trevorncube2@gmail.com",
-            ecocash_number: "0771111111",
-            result_url: "http://localhost:3000/orders",
-            product: "King's Watch Pre-Order Payment",
-            invoice: `Order ${Date.now().toString()}`,
-          }),
-        });
-        if (res.ok) {
-          const { status } = await res.json();
-          if (status === "sent" || status === "paid") {
-            createOrder = true;
-            preOderDetails.paymentStatus = "paid";
-            toast.success("Payment successful", {
-              icon: "🎉",
-            });
-          } else {
-            toast.error("Payment failed, please try again", {
-              icon: "❌",
-            });
-          }
+      setProcessingPayment(true);
+      toast("Check your phone for payment request", {
+        icon: "⏳",
+        style: {
+          backgroundColor: "#f8fafc",
+          color: "#000",
+        },
+        duration: 5000,
+      });
+      const res = await fetch(process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: orderTotal + selectedFee,
+          auth_email: "trevorncube2@gmail.com",
+          ecocash_number: "0771111111",
+          result_url: "http://localhost:3000/orders",
+          product: "King's Watch Pre-Order Payment",
+          invoice: `Order ${Date.now().toString()}`,
+        }),
+      });
+      if (res.ok) {
+        const { status } = await res.json();
+        if (status === "sent" || status === "paid") {
+          createOrder = true;
+          preOderDetails.paymentStatus = "paid";
+          toast.success("Payment successful", {
+            icon: "🎉",
+          });
         } else {
-          toast.error("Payment failed", {
+          toast.error("Payment failed, please try again", {
             icon: "❌",
           });
         }
-        setProcessingPayment(false);
       } else {
-        createOrder = true;
+        toast.error("Payment failed, please try again", {
+          icon: "❌",
+        });
       }
+      setProcessingPayment(false);
+
       if (createOrder) {
         const response = await fetch("/api/orders/pre-order", {
           method: "POST",
@@ -267,9 +271,9 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                   />
                 </div>
                 <h2 className="text-xl font-semibold text-black dark:text-gray-50">
-                  Delivery & Payment Options
+                  Delivery Options
                 </h2>
-                <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-2 md:space-x-6">
+                <div className="flex flex-col">
                   <div className="relative z-0 w-full mb-5 group">
                     <RadioGroup
                       label="Select your distance from Harare"
@@ -285,26 +289,6 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                           {distance.label}
                         </Radio>
                       ))}
-                    </RadioGroup>
-                  </div>
-                  <div className="relative z-0 w-full mb-5 group">
-                    <RadioGroup
-                      label="Select your payment method"
-                      value={selectedPaymentMethod}
-                      onValueChange={(value) => setSelectedPaymentMethod(value)}
-                    >
-                      <Radio
-                        value="EcoCash"
-                        color="warning"
-                      >
-                        EcoCash
-                      </Radio>
-                      <Radio
-                        value="Cash On Delivery"
-                        color="warning"
-                      >
-                        Cash On Delivery
-                      </Radio>
                     </RadioGroup>
                   </div>
                 </div>

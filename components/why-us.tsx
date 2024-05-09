@@ -25,10 +25,10 @@ const WhyUs = () => {
         <div className="flex flex-col items-start justify-start gap-4">
           <CreditCard size={48} />
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-            Flexible Payment
+            Hustle-Free Payment
           </h1>
           <p className="text-gray-600 dark:text-gray-300 max-w-80">
-            Pay with mobile money or cash on delivery.
+            Use EcoCash or InnBucks to pay for your order.
           </p>
         </div>
         <div className="flex flex-col items-start justify-start gap-4">
@@ -37,7 +37,7 @@ const WhyUs = () => {
             Curated Collections
           </h1>
           <p className="text-gray-600 dark:text-gray-300 max-w-80">
-            Hand-picked selection of exceptional watches to suit every taste.
+            Hand-picked selection of exceptional pieces to suit every taste.
           </p>
         </div>
       </div>

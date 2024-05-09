@@ -25,7 +25,6 @@ const DetailsForm = ({
 }) => {
   const [user, setUser] = useState({ name, email, phoneNumber, address });
   const [selectedFee, setSelectedFee] = useState(0);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("EcoCash");
   const [loading, setLoading] = useState(false);
   const [processingPayment, setProcessingPayment] = useState(false);
   const { cart, cartTotal, clearCart } = useCartStore();
@@ -47,50 +46,46 @@ const DetailsForm = ({
     setLoading(true);
     let createOrder = false;
     try {
-      if (selectedPaymentMethod === "EcoCash") {
-        setProcessingPayment(true);
-        toast("Check your phone for payment request", {
-          icon: "⏳",
-          style: {
-            backgroundColor: "#f8fafc",
-            color: "#000",
+      setProcessingPayment(true);
+      toast("Check your phone for payment request", {
+        icon: "⏳",
+        style: {
+          backgroundColor: "#f8fafc",
+          color: "#000",
+        },
+        duration: 5000,
+      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-          duration: 5000,
-        });
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              amount: cartTotal + selectedFee,
-              auth_email: "trevorncube2@gmail.com",
-              ecocash_number: "0771111111",
-              result_url: "http://localhost:3000/orders",
-              product: "King's Watch Order Payment",
-              invoice: `Order ${Date.now().toString()}`,
-            }),
-          }
-        );
-        if (response.ok) {
-          const { status } = await response.json();
-          if (status === "sent" || status === "paid") {
-            createOrder = true;
-            toast.success("Payment successful", {
-              icon: "🎉",
-            });
-          } else {
-            toast.error("Payment failed, order not created", {
-              icon: "❌",
-            });
-          }
+          body: JSON.stringify({
+            amount: cartTotal + selectedFee,
+            auth_email: "trevorncube2@gmail.com",
+            ecocash_number: "0771111111",
+            result_url: "http://localhost:3000/orders",
+            product: "King's Watch Order Payment",
+            invoice: `Order ${Date.now().toString()}`,
+          }),
         }
-        setProcessingPayment(false);
-      } else {
-        createOrder = true;
+      );
+      if (response.ok) {
+        const { status } = await response.json();
+        if (status === "sent" || status === "paid") {
+          createOrder = true;
+          toast.success("Payment successful", {
+            icon: "🎉",
+          });
+        } else {
+          toast.error("Payment failed, order not created", {
+            icon: "❌",
+          });
+        }
       }
+      setProcessingPayment(false);
       if (createOrder) {
         const rawOrderItems: CreateOrderItem[] = cart.map((product) => ({
           product: { _type: "reference", _ref: product._id },
@@ -194,29 +189,6 @@ const DetailsForm = ({
           ))}
         </RadioGroup>
       </div>
-      <legend className="text-xl font-semibold my-6 text-gray-900 dark:text-white">
-        Payment Method
-      </legend>
-      <div className="relative z-0 w-full mb-5 group">
-        <RadioGroup
-          label="Select your payment method"
-          value={selectedPaymentMethod}
-          onValueChange={(value) => setSelectedPaymentMethod(value)}
-        >
-          <Radio
-            value="EcoCash"
-            color="warning"
-          >
-            EcoCash
-          </Radio>
-          <Radio
-            value="Cash On Delivery"
-            color="warning"
-          >
-            Cash On Delivery
-          </Radio>
-        </RadioGroup>
-      </div>
       <div className="mt-8">
         <p className="text-xl mb-8 font-semibold text-gray-900 dark:text-white">
           Order summary
@@ -233,10 +205,8 @@ const DetailsForm = ({
           className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 flex items-center justify-center font-medium rounded-lg text-sm w-full sm:max-w-sm mx-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800 disabled:bg-gray-800 disabled:text-gray-300 disabled:cursor-not-allowed dark:disabled:bg-zinc-600"
           onClick={handleSubmit}
         >
-          {!loading && selectedPaymentMethod === "EcoCash" ? (
+          {!loading ? (
             "Pay with EcoCash"
-          ) : !loading && selectedPaymentMethod === "Cash On Delivery" ? (
-            "Place Order"
           ) : (
             <>
               <Spinner
