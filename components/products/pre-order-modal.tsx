@@ -21,6 +21,7 @@ import FloatingTextArea from "../ui/floating-autoheight-textarea";
 import { formatCurrency } from "@/lib/utils";
 import PreOrderSummary from "./pre-order-summary";
 import { CreatePreOrder } from "@/types";
+import toast from "react-hot-toast";
 
 const PreOrderModal = ({ product }: { product: Product }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -68,6 +69,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
 
   async function preOrderProduct() {
     setLoading(true);
+    let createOrder = false;
     const preOderDetails: CreatePreOrder = {
       address: userDetails.address,
       email: userDetails.email,
@@ -76,7 +78,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
         _type: "reference",
         _ref: user?.publicMetadata.userId as string,
       },
-      paymentStatus: selectedPaymentMethod === "EcoCash" ? "paid" : "pending",
+      paymentStatus: "pending",
       phone: userDetails.phone,
       product: { _type: "reference", _ref: product._id },
       price: product.price,
@@ -86,15 +88,53 @@ const PreOrderModal = ({ product }: { product: Product }) => {
       createdAt: new Date().toISOString(),
     };
     try {
-      const response = await fetch("/api/orders/pre-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ preOderItem: preOderDetails }),
-      });
-      if (response.ok) {
-        onOpenChange();
+      if (selectedPaymentMethod === "EcoCash") {
+        const res = await fetch(process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: orderTotal + selectedFee,
+            auth_email: "trevorncube2@gmail.com",
+            ecocash_number: "0771111111",
+            result_url: "http://localhost:3000/orders",
+            product: "King's Watch Pre-Order Payment",
+            invoice: `Order ${Date.now().toString()}`,
+          }),
+        });
+        if (res.ok) {
+          const { status } = await res.json();
+          if (status === "sent" || status === "paid") {
+            createOrder = true;
+            preOderDetails.paymentStatus = "paid";
+            toast.success("Payment successful", {
+              icon: "🎉",
+            });
+          } else {
+            toast.error("Payment failed, please try again", {
+              icon: "❌",
+            });
+          }
+        } else {
+          toast.error("Payment failed", {
+            icon: "❌",
+          });
+        }
+      } else {
+        createOrder = true;
+      }
+      if (createOrder) {
+        const response = await fetch("/api/orders/pre-order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ preOderItem: preOderDetails }),
+        });
+        if (response.ok) {
+          onOpenChange();
+        }
       }
     } catch (error) {
       console.log(error);

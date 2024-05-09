@@ -6,7 +6,7 @@ import { CreatePreOrder } from "@/types";
 
 export async function getPreOrders(userId: string) {
   return await client.fetch(
-    groq`*[_type == "preOrder" && user._ref == $userId] | order(createdAt desc) {
+    groq`*[_type == "preOrder" && customer._ref == $userId] | order(createdAt desc) {
             _id,
             name,
             "product": product->{

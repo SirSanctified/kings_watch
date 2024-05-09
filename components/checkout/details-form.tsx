@@ -73,38 +73,44 @@ const DetailsForm = ({
             toast.success("Payment successful", {
               icon: "🎉",
             });
+          } else {
+            toast.error("Payment failed, order not created", {
+              icon: "❌",
+            });
           }
         }
       } else {
         createOrder = true;
       }
-      const rawOrderItems: CreateOrderItem[] = cart.map((product) => ({
-        product: { _type: "reference", _ref: product._id },
-        quantity: product.quantity,
-        price: product.price,
-        name: product.name,
-        total: product.price * product.quantity,
-      }));
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          rawOrderItems,
-          orderTotal: cartTotal + selectedFee,
-          userId,
-          userDetails: {
-            name: user.name,
-            email: user.email,
-            phone: user.phoneNumber,
-            address: user.address,
+      if (createOrder) {
+        const rawOrderItems: CreateOrderItem[] = cart.map((product) => ({
+          product: { _type: "reference", _ref: product._id },
+          quantity: product.quantity,
+          price: product.price,
+          name: product.name,
+          total: product.price * product.quantity,
+        }));
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        }),
-      });
-      if (response.ok) {
-        clearCart();
-        router.push("/orders");
+          body: JSON.stringify({
+            rawOrderItems,
+            orderTotal: cartTotal + selectedFee,
+            userId,
+            userDetails: {
+              name: user.name,
+              email: user.email,
+              phone: user.phoneNumber,
+              address: user.address,
+            },
+          }),
+        });
+        if (response.ok) {
+          clearCart();
+          router.push("/orders");
+        }
       }
     } catch (error) {
       toast.error("Something went wrong, please try again");
