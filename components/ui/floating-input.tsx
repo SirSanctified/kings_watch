@@ -14,6 +14,7 @@ const FloatingInput = ({
   required,
   readOnly = false,
   min,
+  helperText,
 }: {
   className?: string;
   labelClassName?: string;
@@ -28,6 +29,7 @@ const FloatingInput = ({
   required?: boolean;
   readOnly?: boolean;
   min?: number | string | undefined;
+  helperText?: string;
 }) => {
   return (
     <div className={cn("relative z-0 w-full group", className)}>
@@ -39,6 +41,7 @@ const FloatingInput = ({
           "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-yellow-500 focus:outline-none focus:ring-0 focus:border-yellow-600 peer",
           inputClassName
         )}
+        aria-describedby={helperText ? "helper-text-explanation" : undefined}
         placeholder={placeholder || " "}
         required={required}
         value={value}
@@ -55,6 +58,14 @@ const FloatingInput = ({
       >
         {label} {required && <span className="text-red-500">*</span>}
       </label>
+      {helperText && (
+        <p
+          id="helper-text-explanation"
+          className="mt-2 text-sm text-gray-500 dark:text-gray-400"
+        >
+          {helperText}
+        </p>
+      )}
     </div>
   );
 };

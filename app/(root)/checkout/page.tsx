@@ -7,7 +7,17 @@ import { Toaster } from "react-hot-toast";
 const CheckoutPage = async () => {
   return (
     <main className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
-      <Toaster />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          icon: "🔔",
+          iconTheme: {
+            primary: "yellow",
+            secondary: "black",
+          },
+          className: "!bg-yellow-400 !text-black",
+        }}
+      />
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
           Order Checkout

@@ -9,7 +9,6 @@ import { useCartStore } from "@/context/cart-store";
 import { CreateOrderItem } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import Link from "next/link";
 
 const DetailsForm = ({
   userId,
@@ -28,7 +27,7 @@ const DetailsForm = ({
   const [selectedFee, setSelectedFee] = useState(0);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("EcoCash");
   const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [processingPayment, setProcessingPayment] = useState(false);
   const { cart, cartTotal, clearCart } = useCartStore();
   const router = useRouter();
 
@@ -49,6 +48,15 @@ const DetailsForm = ({
     let createOrder = false;
     try {
       if (selectedPaymentMethod === "EcoCash") {
+        setProcessingPayment(true);
+        toast("Check your phone for payment request", {
+          icon: "⏳",
+          style: {
+            backgroundColor: "#f8fafc",
+            color: "#000",
+          },
+          duration: 5000,
+        });
         const response = await fetch(
           process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
           {
@@ -79,6 +87,7 @@ const DetailsForm = ({
             });
           }
         }
+        setProcessingPayment(false);
       } else {
         createOrder = true;
       }
@@ -116,12 +125,13 @@ const DetailsForm = ({
       toast.error("Something went wrong, please try again");
     } finally {
       setLoading(false);
+      setProcessingPayment(false);
     }
   };
   return (
-    <div
+    <form
       className="max-w-3xl lg:mx-auto"
-      // onSubmit={handleSubmit}
+      onSubmit={handleSubmit}
     >
       <legend className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
         Personal Details
@@ -153,6 +163,7 @@ const DetailsForm = ({
         required
         value={user.phoneNumber}
         onChange={handleChange}
+        helperText="We will send EcoCash payment request to this number"
       />
       <legend className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
         Delivery Options
@@ -231,12 +242,14 @@ const DetailsForm = ({
                 size="sm"
                 color="white"
               />
-              <span className="ml-2">Processing...</span>
+              <span className="ml-2">
+                {processingPayment ? "Prcessing Payment" : "Creating Order"}...
+              </span>
             </>
           )}
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 

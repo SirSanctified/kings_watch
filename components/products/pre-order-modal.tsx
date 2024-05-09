@@ -38,6 +38,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("EcoCash");
   const [selectedFee, setSelectedFee] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [processingPayment, setProcessingPayment] = useState(false);
 
   useEffect(() => {
     async function getSanityUser() {
@@ -89,6 +90,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
     };
     try {
       if (selectedPaymentMethod === "EcoCash") {
+        setProcessingPayment(true);
         const res = await fetch(process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!, {
           method: "POST",
           headers: {
@@ -121,6 +123,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
             icon: "❌",
           });
         }
+        setProcessingPayment(false);
       } else {
         createOrder = true;
       }
@@ -140,6 +143,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
       console.log(error);
     } finally {
       setLoading(false);
+      setProcessingPayment(false);
     }
   }
 
@@ -326,10 +330,18 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                   className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg block min-w-40 px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
                 >
                   {loading ? (
-                    <Spinner
-                      size="sm"
-                      color="white"
-                    />
+                    <>
+                      <Spinner
+                        size="sm"
+                        color="white"
+                      />
+                      <span className="ml-2">
+                        {processingPayment
+                          ? "Processing Payment"
+                          : "Creating Order"}
+                        ...
+                      </span>
+                    </>
                   ) : (
                     "Pre-Order"
                   )}
