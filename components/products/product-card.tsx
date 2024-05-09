@@ -24,7 +24,7 @@ const ProductCard = ({
           isZoomed
           as={NextImage}
           src={image}
-          alt={name}
+          alt={`Image showcasing ${name}`}
           width={300}
           height={200}
           className="rounded-lg h-48 w-full object-cover"

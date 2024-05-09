@@ -16,11 +16,12 @@ const CategoryCard = ({
       className="shadow dark:bg-gray-700 relative p-0"
       as={Link}
       href={`/products?category=${_id}`}
+      title={`View all products in ${name} category`}
     >
       <CardBody>
         <Image
           src={imgSrc}
-          alt={name}
+          alt={`${name} category image`}
           width={300}
           height={300}
           className="rounded-lg h-40 w-full object-cover"
