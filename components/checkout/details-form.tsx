@@ -9,6 +9,7 @@ import { useCartStore } from "@/context/cart-store";
 import { CreateOrderItem } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const DetailsForm = ({
   userId,
@@ -27,6 +28,7 @@ const DetailsForm = ({
   const [selectedFee, setSelectedFee] = useState(0);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("EcoCash");
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { cart, cartTotal, clearCart } = useCartStore();
   const router = useRouter();
 
@@ -41,10 +43,41 @@ const DetailsForm = ({
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
     setLoading(true);
+    let createOrder = false;
     try {
+      if (selectedPaymentMethod === "EcoCash") {
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              amount: cartTotal + selectedFee,
+              auth_email: "trevorncube2@gmail.com",
+              ecocash_number: "0771111111",
+              result_url: "http://localhost:3000/orders",
+              product: "King's Watch Order Payment",
+              invoice: `Order ${Date.now().toString()}`,
+            }),
+          }
+        );
+        if (response.ok) {
+          const { status } = await response.json();
+          if (status === "sent" || status === "paid") {
+            createOrder = true;
+            toast.success("Payment successful", {
+              icon: "🎉",
+            });
+          }
+        }
+      } else {
+        createOrder = true;
+      }
       const rawOrderItems: CreateOrderItem[] = cart.map((product) => ({
         product: { _type: "reference", _ref: product._id },
         quantity: product.quantity,
@@ -80,9 +113,9 @@ const DetailsForm = ({
     }
   };
   return (
-    <form
+    <div
       className="max-w-3xl lg:mx-auto"
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
     >
       <legend className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
         Personal Details
@@ -180,20 +213,24 @@ const DetailsForm = ({
         <button
           type="submit"
           className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg block text-sm w-full sm:max-w-sm mx-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+          onClick={handleSubmit}
         >
           {!loading && selectedPaymentMethod === "EcoCash" ? (
             "Pay with EcoCash"
           ) : !loading && selectedPaymentMethod === "Cash On Delivery" ? (
             "Place Order"
           ) : (
-            <Spinner
-              size="sm"
-              color="white"
-            />
+            <>
+              <Spinner
+                size="sm"
+                color="white"
+              />
+              <span className="ml-2">Processing...</span>
+            </>
           )}
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 

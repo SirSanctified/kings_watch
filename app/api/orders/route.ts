@@ -41,6 +41,7 @@ export async function POST(req: Request) {
         email: userDetails.email,
         address: userDetails.address,
         phone: userDetails.phone,
+        number: Math.floor(Math.random() * 100000).toString(),
         user: { _type: "reference", _ref: userId },
         createdAt: new Date().toISOString(),
       });

@@ -2,10 +2,12 @@ import CartItems from "@/components/cart/cart-items";
 import UserDetails from "@/components/checkout/user-details";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { Toaster } from "react-hot-toast";
 
 const CheckoutPage = async () => {
   return (
     <main className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+      <Toaster />
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
           Order Checkout
