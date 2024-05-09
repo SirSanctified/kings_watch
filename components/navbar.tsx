@@ -35,7 +35,10 @@ export default function CustomNavbar() {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
-        <Link href="/">
+        <Link
+          href="/"
+          title="King's Watch HomePage"
+        >
           <NavbarBrand>
             <Image
               src={"/logo-icon.png"}
@@ -58,6 +61,7 @@ export default function CustomNavbar() {
           <Link
             color="foreground"
             href="/products"
+            title="All products"
           >
             Products
           </Link>
@@ -67,6 +71,7 @@ export default function CustomNavbar() {
             <Link
               color="foreground"
               href="/orders"
+              title="Orders that you have placed"
             >
               Orders
             </Link>
@@ -75,7 +80,7 @@ export default function CustomNavbar() {
         <NavbarItem className="relative">
           <Link
             href="/cart"
-            aria-current="page"
+            title="Your Cart"
           >
             <ShoppingCart size={24} />
           </Link>
@@ -90,7 +95,7 @@ export default function CustomNavbar() {
         <NavbarItem className="relative sm:hidden">
           <Link
             href="/cart"
-            aria-current="page"
+            title="Your Cart"
           >
             <ShoppingCart size={24} />
           </Link>
@@ -108,9 +113,10 @@ export default function CustomNavbar() {
             <Button
               as={Link}
               size="md"
-              color="primary"
               href="/sign-in"
               variant="flat"
+              title="Sign In"
+              className="bg-yellow-700 hover:bg-yellow-900 text-white dark:bg-yellow-700 dark:hover:bg-yellow-950 text-md font-medium"
             >
               Log In
             </Button>
@@ -122,13 +128,28 @@ export default function CustomNavbar() {
       </NavbarContent>
       <NavbarMenu className="text-foreground">
         <NavbarMenuItem onClick={() => setIsMenuOpen(false)}>
-          <Link href={"/products"}>Products</Link>
+          <Link
+            href={"/products"}
+            title="All products"
+          >
+            Products
+          </Link>
         </NavbarMenuItem>
         <NavbarMenuItem onClick={() => setIsMenuOpen(false)}>
-          <Link href={"/orders"}>Orders</Link>
+          <Link
+            href={"/orders"}
+            title="Orders that you have placed"
+          >
+            Orders
+          </Link>
         </NavbarMenuItem>
         <NavbarMenuItem onClick={() => setIsMenuOpen(false)}>
-          <Link href={"/cart"}>Cart</Link>
+          <Link
+            href={"/cart"}
+            title="Your Cart"
+          >
+            Cart
+          </Link>
         </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>

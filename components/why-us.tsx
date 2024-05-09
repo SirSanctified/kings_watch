@@ -28,7 +28,7 @@ const WhyUs = () => {
             Hustle-Free Payment
           </h1>
           <p className="text-gray-600 dark:text-gray-300 max-w-80">
-            Use EcoCash or InnBucks to pay for your order.
+            Use EcoCash to effortlessly pay for your order.
           </p>
         </div>
         <div className="flex flex-col items-start justify-start gap-4">
