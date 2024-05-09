@@ -41,14 +41,14 @@ const ProductCard = ({
           <p
             className={cn(
               "font-medium w-full text-end my-4",
-              stock > 0 ? "text-green-800 text-lg" : "text-red-500 text-sm"
+              stock > 0 ? "text-green-800 text-lg" : "text-red-800 text-sm"
             )}
           >
             {stock > 0 ? `${stock} left` : "Out of stock"}
           </p>
         </div>
         {stock === 0 && (
-          <p className="text-green-800 text-lg font-semibold w-full">
+          <p className="text-green-900 text-lg font-semibold w-full">
             🔥 {10}% off on pre-order
           </p>
         )}
@@ -62,9 +62,9 @@ const ProductCard = ({
             as={Link}
             title="View product details"
             href={`/products/${slug}`}
-            className="w-full"
+            className="w-full flex-1"
           >
-            Learn More
+            View Details
           </Button>
           {stock > 0 ? (
             <AddToCartButton

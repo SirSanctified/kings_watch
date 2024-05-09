@@ -155,7 +155,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
     <>
       <Button
         onPress={onOpen}
-        className="bg-yellow-800 hover:bg-yellow-600 h-10 px-4"
+        className="bg-yellow-700 hover:bg-yellow-800 text-white text-md font-medium h-10 px-4"
       >
         {isLoaded ? (
           "Pre-Order"

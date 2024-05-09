@@ -18,9 +18,9 @@ const Footer = () => {
                 width={50}
                 height={50}
               />
-              <span className="ml-2 text-yellow-700">King&apos;s Watch</span>
+              <span className="ml-2 text-white">King&apos;s Watch</span>
             </Link>
-            <p className="text-gray-200 w-full md:text-start">
+            <p className="text-white w-full md:text-start">
               The latest and greatest timepieces in Zimbabwe 🇿🇼 .
             </p>
             <div
