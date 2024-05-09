@@ -34,12 +34,14 @@ const OrdersList = ({ orders }: { orders: FetchedOrder[] }) => {
           ))}
         </div>
       ))}
-      <button
-        onClick={() => setShowAll(!showAll)}
-        className="text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-      >
-        {showAll ? "Show less" : "Show all"}
-      </button>
+      {orders.length > 3 && (
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className=" m-1 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+        >
+          {showAll ? "Show less" : "Show all"}
+        </button>
+      )}
     </div>
   );
 };
