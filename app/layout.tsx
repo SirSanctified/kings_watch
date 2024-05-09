@@ -44,6 +44,13 @@ export const metadata: Metadata = {
   publisher: "Pritchard Mambambo",
   applicationName: "King's Watch Zim",
   category: "E-Commerce",
+  openGraph: {
+    images: ["/preview.png"],
+    type: "website",
+    siteName: "King's Watch Zim",
+    title: "King's Watch Zim - For all your watch needs",
+    countryName: "Zimbabwe",
+  },
 };
 const RootLayout = ({
   children,
