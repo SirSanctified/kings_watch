@@ -45,10 +45,21 @@ export const metadata: Metadata = {
   applicationName: "King's Watch Zim",
   category: "E-Commerce",
   openGraph: {
-    images: ["/preview.png"],
+    images: [
+      {
+        url: "https://kings-watch.vercel.app/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "King's Watch Zim",
+      },
+    ],
     type: "website",
     siteName: "King's Watch Zim",
     title: "King's Watch Zim - For all your watch needs",
+    description:
+      "The best watch store in the Harare. We have watches for every occasion. Find us in Room G11, Nickys Mall, Corner Bank And Chinhoyi Street, opposite Gulf Complex, Harare.",
+    determiner: "auto",
+    url: "https://kings-watch.vercel.app/",
     countryName: "Zimbabwe",
   },
 };
