@@ -60,6 +60,7 @@ const ProductCard = ({
             variant="solid"
             color="primary"
             as={Link}
+            title="View product details"
             href={`/products/${slug}`}
             className="w-full"
           >
