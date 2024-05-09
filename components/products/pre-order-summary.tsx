@@ -60,6 +60,10 @@ const PreOrderSummary = ({
           {formatCurrency(amountAfterDiscount + deliveryFee)}
         </dd>
       </dl>
+      <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+        Note: We use Paynow to process payments. The total amount does not
+        include the Paynow fee.
+      </p>
     </div>
   );
 };

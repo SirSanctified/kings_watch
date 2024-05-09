@@ -229,7 +229,8 @@ const DetailsForm = ({
       <div className="mt-4 mx-auto w-full">
         <button
           type="submit"
-          className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 flex items-center justify-centerfont-medium rounded-lg  text-sm w-full sm:max-w-sm mx-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+          disabled={loading || processingPayment || cartTotal === 0}
+          className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 flex items-center justify-center font-medium rounded-lg text-sm w-full sm:max-w-sm mx-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800 disabled:bg-gray-800 disabled:text-gray-300 disabled:cursor-not-allowed dark:disabled:bg-zinc-600"
           onClick={handleSubmit}
         >
           {!loading && selectedPaymentMethod === "EcoCash" ? (
@@ -243,7 +244,7 @@ const DetailsForm = ({
                 color="white"
               />
               <span className="ml-2">
-                {processingPayment ? "Pr0cessing Payment" : "Creating Order"}...
+                {processingPayment ? "Processing Payment" : "Creating Order"}...
               </span>
             </>
           )}
