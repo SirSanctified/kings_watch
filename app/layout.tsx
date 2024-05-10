@@ -47,6 +47,12 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
+        url: "/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "King's Watch Zim",
+      },
+      {
         url: "https://kings-watch.vercel.app/preview.png",
         width: 1200,
         height: 630,
