@@ -55,6 +55,7 @@ const DetailsForm = ({
         },
         duration: 5000,
       });
+      console.log(cartTotal + selectedFee);
       const response = await fetch(
         process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
         {
@@ -64,9 +65,9 @@ const DetailsForm = ({
           },
           body: JSON.stringify({
             amount: cartTotal + selectedFee,
-            auth_email: "trevorncube2@gmail.com",
-            ecocash_number: "0771111111",
-            result_url: "http://localhost:3000/orders",
+            auth_email: user.email ?? "trevorncube2@gmail.com",
+            ecocash_number: user.phoneNumber,
+            result_url: process.env.NEXT_PUBLIC_PAYMENT_RESULT_URL!,
             product: "King's Watch Order Payment",
             invoice: `Order ${Date.now().toString()}`,
           }),
@@ -76,14 +77,18 @@ const DetailsForm = ({
         const { status } = await response.json();
         if (status === "sent" || status === "paid") {
           createOrder = true;
-          toast.success("Payment successful", {
-            icon: "🎉",
-          });
         } else {
           toast.error("Payment failed, order not created", {
             icon: "❌",
           });
         }
+      } else {
+        toast.error("Payment failed, order not created", {
+          icon: "❌",
+        });
+        setLoading(false);
+        setProcessingPayment(false);
+        return;
       }
       setProcessingPayment(false);
       if (createOrder) {

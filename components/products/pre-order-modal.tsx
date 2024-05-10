@@ -103,46 +103,51 @@ const PreOrderModal = ({ product }: { product: Product }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: orderTotal + selectedFee,
-          auth_email: "trevorncube2@gmail.com",
-          ecocash_number: "0771111111",
-          result_url: "http://localhost:3000/orders",
-          product: "King's Watch Pre-Order Payment",
+          amount: orderTotal * 0.9 + selectedFee,
+          auth_email: userDetails.email,
+          ecocash_number: userDetails.phone,
+          result_url: process.env.NEXT_PUBLIC_PAYMENT_RESULT_URL!,
+          product: product.name,
           invoice: `Order ${Date.now().toString()}`,
         }),
       });
       if (res.ok) {
         const { status } = await res.json();
+        console.log("Payment status: ", status);
         if (status === "sent" || status === "paid") {
           createOrder = true;
           preOderDetails.paymentStatus = "paid";
-          toast.success("Payment successful", {
-            icon: "🎉",
-          });
         } else {
           toast.error("Payment failed, please try again", {
             icon: "❌",
           });
+          setProcessingPayment(false);
+          return;
         }
       } else {
         toast.error("Payment failed, please try again", {
           icon: "❌",
         });
       }
-      setProcessingPayment(false);
+      setTimeout(async () => {
+        setProcessingPayment(false);
 
-      if (createOrder) {
-        const response = await fetch("/api/orders/pre-order", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ preOderItem: preOderDetails }),
-        });
-        if (response.ok) {
-          onOpenChange();
+        if (createOrder) {
+          const response = await fetch("/api/orders/pre-order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ preOderItem: preOderDetails }),
+          });
+          if (response.ok) {
+            toast.success("Order created successfully", {
+              icon: "✅",
+            });
+            onOpenChange();
+          }
         }
-      }
+      });
     } catch (error) {
       console.log(error);
     } finally {
