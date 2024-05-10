@@ -55,7 +55,6 @@ const DetailsForm = ({
         },
         duration: 5000,
       });
-      console.log(cartTotal + selectedFee);
       const response = await fetch(
         process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
         {
