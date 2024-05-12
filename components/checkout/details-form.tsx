@@ -43,9 +43,8 @@ const DetailsForm = ({
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | any) => {
-    e.preventDefault();
     setLoading(true);
-    let createOrder = false;
+    // let createOrder = false;
     try {
       // setProcessingPayment(true);
       // toast("Check your phone for payment request", {
@@ -163,7 +162,7 @@ const DetailsForm = ({
         required
         value={user.phoneNumber}
         onChange={handleChange}
-        helperText="We will send EcoCash payment request to this number"
+        helperText="We will send you order updates on this number"
       />
       <legend className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
         Delivery Options
@@ -213,7 +212,7 @@ const DetailsForm = ({
           onClick={handleSubmit}
         >
           {!loading ? (
-            "Pay with EcoCash"
+            "Proceed to Payment"
           ) : (
             <>
               <Spinner

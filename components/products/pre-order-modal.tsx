@@ -223,6 +223,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                     onChange={(e) =>
                       setUserDetails({ ...userDetails, phone: e.target.value })
                     }
+                    helperText="We will send you order updates on this number"
                   />
                   <FloatingTextArea
                     label="Address"
