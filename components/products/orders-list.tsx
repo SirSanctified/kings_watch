@@ -4,6 +4,7 @@ import OrderRow from "../order-row";
 import { formatDistanceToNowStrict } from "date-fns";
 import { FetchedOrder } from "@/types";
 import { useState } from "react";
+import Link from "next/link";
 
 const OrdersList = ({ orders }: { orders: FetchedOrder[] }) => {
   const [showAll, setShowAll] = useState(false);
@@ -11,8 +12,13 @@ const OrdersList = ({ orders }: { orders: FetchedOrder[] }) => {
   return (
     <div className="shadow-md sm:rounded-lg relative">
       {orders.slice(0, showAll ? orders.length : 3).map((order) => (
-        <div
+        <Link 
           key={order._id}
+          href={`/orders/${order._id}`}
+          className="block"
+        >
+        <div
+          
           className="p-4 max-w-[100vw] overflow-x-scroll sm:overflow-x-hidden rounded-lg mb-4 border border-gray-500 dark:border-gray-400"
         >
           <div className="flex flex-col md:flex-row md:items-center mb-4 gap-4 justify-between">
@@ -33,6 +39,7 @@ const OrdersList = ({ orders }: { orders: FetchedOrder[] }) => {
             />
           ))}
         </div>
+        </Link>
       ))}
       {orders.length > 3 && (
         <button
