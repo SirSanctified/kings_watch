@@ -38,7 +38,6 @@ const PreOrderModal = ({ product }: { product: Product }) => {
 
   const [selectedFee, setSelectedFee] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [processingPayment, setProcessingPayment] = useState(false);
 
   useEffect(() => {
     async function getSanityUser() {
@@ -70,7 +69,6 @@ const PreOrderModal = ({ product }: { product: Product }) => {
 
   async function preOrderProduct() {
     setLoading(true);
-    let createOrder = false;
     const preOderDetails: CreatePreOrder = {
       address: userDetails.address,
       email: userDetails.email,
@@ -89,71 +87,23 @@ const PreOrderModal = ({ product }: { product: Product }) => {
       createdAt: new Date().toISOString(),
     };
     try {
-      // setProcessingPayment(true);
-      // toast("Check your phone for payment request", {
-      //   icon: "⏳",
-      //   style: {
-      //     backgroundColor: "#f8fafc",
-      //     color: "#000",
-      //   },
-      //   duration: 5000,
-      // });
-      // const res = await fetch(process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     amount: orderTotal * 0.9 + selectedFee,
-      //     auth_email: userDetails.email,
-      //     ecocash_number: userDetails.phone,
-      //     result_url: process.env.NEXT_PUBLIC_PAYMENT_RESULT_URL!,
-      //     product: product.name,
-      //     invoice: `Order ${Date.now().toString()}`,
-      //   }),
-      // });
-      // if (res.ok) {
-      //   const { status } = await res.json();
-      //   console.log("Payment status: ", status);
-      //   if (status === "sent" || status === "paid") {
-      //     createOrder = true;
-      //     preOderDetails.paymentStatus = "paid";
-      //   } else {
-      //     toast.error("Payment failed, please try again", {
-      //       icon: "❌",
-      //     });
-      //     setProcessingPayment(false);
-      //     return;
-      //   }
-      // } else {
-      //   toast.error("Payment failed, please try again", {
-      //     icon: "❌",
-      //   });
-      // }
-      // setTimeout(async () => {
-      //   setProcessingPayment(false);
-
-        // if (createOrder) {
-          const response = await fetch("/api/orders/pre-order", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ preOderItem: preOderDetails }),
-          });
-          if (response.ok) {
-            toast.success("Order created successfully", {
-              icon: "✅",
-            });
-            onOpenChange();
-          }
-        // }
-      // });
+      const response = await fetch("/api/orders/pre-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ preOderItem: preOderDetails }),
+      });
+      if (response.ok) {
+        toast.success("Order created successfully", {
+          icon: "✅",
+        });
+        onOpenChange();
+      }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
-      setProcessingPayment(false);
     }
   }
 
@@ -163,14 +113,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
         onPress={onOpen}
         className="bg-yellow-700 hover:bg-yellow-800 text-white text-md font-medium h-10 px-4"
       >
-        {isLoaded ? (
-          "Pre-Order"
-        ) : (
-          <Spinner
-            size="sm"
-            color="white"
-          />
-        )}
+        {isLoaded ? "Pre-Order" : <Spinner size="sm" color="white" />}
       </Button>
       <Modal
         isOpen={isOpen}
@@ -187,6 +130,12 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                 Fill in your order details
               </ModalHeader>
               <ModalBody className="flex mt-4 flex-col space-y-6">
+                <p className="mb-3 text-gray-700 dark:text-gray-200">
+                  After a successfull payment, update your order with the Paynow
+                  reference given to you after the payment. If you do not enter
+                  this reference, your order will not be processed
+                  automatically.
+                </p>
                 <h2 className="text-xl font-semibold text-black dark:text-gray-50">
                   Personal Details
                 </h2>
@@ -309,11 +258,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button
-                  color="danger"
-                  variant="flat"
-                  onPress={onClose}
-                >
+                <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
                 <Link
@@ -324,16 +269,8 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                 >
                   {loading ? (
                     <>
-                      <Spinner
-                        size="sm"
-                        color="white"
-                      />
-                      <span className="ml-2">
-                        {processingPayment
-                          ? "Processing Payment"
-                          : "Creating Order"}
-                        ...
-                      </span>
+                      <Spinner size="sm" color="white" />
+                      <span className="ml-2">Creating Orders ...</span>
                     </>
                   ) : (
                     "Pre-Order"
