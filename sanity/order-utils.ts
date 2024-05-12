@@ -32,8 +32,8 @@ export async function getOrdersByUserId(
   );
 }
 
-export async function getOrderById(id: string): Promise<Omit<PopulatedOrder, "items"> & {items: FetchedOrder["items"]} | null> {
-  const order: Order = await client.fetch(
+export async function getOrderById(id: string): Promise< FetchedOrder | null> {
+  const order: FetchedOrder = await client.fetch(
     groq`*[_type == "order" && _id == $id][0] {
       _id,
       createdAt,
@@ -42,6 +42,17 @@ export async function getOrderById(id: string): Promise<Omit<PopulatedOrder, "it
       number,
       "items": items[]->{
         _id,
+        quantity,
+        price,
+        total,
+        name,
+        "product": product->{
+          _id,
+          name,
+          "slug": slug.current,
+          "image": image.asset->url,
+          price
+        },  
       },
     }`,
     { id }
@@ -49,8 +60,7 @@ export async function getOrderById(id: string): Promise<Omit<PopulatedOrder, "it
   if (!order) {
     return null;
   }
-  const orderItems: FetchedOrder["items"] = await getOrderItemsByOrderId(order._id!);
-  return { ...order, items: orderItems };
+  return order;
 }
 
 export async function createOrder(order: Order) {
