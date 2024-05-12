@@ -56,3 +56,10 @@ export async function getOrderById(id: string): Promise<PopulatedOrder | null> {
 export async function createOrder(order: Order) {
   return await client.create({ _type: "order", ...order });
 }
+
+export async function updateOrder(orderId: string, paynowReference: string) {
+  return await client
+    .patch(orderId)
+    .set({ paynowReference, paymentStatus: "paid" })
+    .commit();
+}
