@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { RadioGroup, Radio, Spinner } from "@nextui-org/react";
 import CartOrderSummary from "../cart/order-summary";
 import FloatingInput from "../ui/floating-input";
@@ -46,52 +47,51 @@ const DetailsForm = ({
     setLoading(true);
     let createOrder = false;
     try {
-      setProcessingPayment(true);
-      toast("Check your phone for payment request", {
-        icon: "⏳",
-        style: {
-          backgroundColor: "#f8fafc",
-          color: "#000",
-        },
-        duration: 5000,
-      });
-      console.log(cartTotal + selectedFee);
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: cartTotal + selectedFee,
-            auth_email: user.email ?? "trevorncube2@gmail.com",
-            ecocash_number: user.phoneNumber,
-            result_url: process.env.NEXT_PUBLIC_PAYMENT_RESULT_URL!,
-            product: "King's Watch Order Payment",
-            invoice: `Order ${Date.now().toString()}`,
-          }),
-        }
-      );
-      if (response.ok) {
-        const { status } = await response.json();
-        if (status === "sent" || status === "paid") {
-          createOrder = true;
-        } else {
-          toast.error("Payment failed, order not created", {
-            icon: "❌",
-          });
-        }
-      } else {
-        toast.error("Payment failed, order not created", {
-          icon: "❌",
-        });
-        setLoading(false);
-        setProcessingPayment(false);
-        return;
-      }
-      setProcessingPayment(false);
-      if (createOrder) {
+      // setProcessingPayment(true);
+      // toast("Check your phone for payment request", {
+      //   icon: "⏳",
+      //   style: {
+      //     backgroundColor: "#f8fafc",
+      //     color: "#000",
+      //   },
+      //   duration: 5000,
+      // });
+      // const response = await fetch(
+      //   process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       amount: cartTotal + selectedFee,
+      //       auth_email: user.email ?? "trevorncube2@gmail.com",
+      //       ecocash_number: user.phoneNumber,
+      //       result_url: process.env.NEXT_PUBLIC_PAYMENT_RESULT_URL!,
+      //       product: "King's Watch Order Payment",
+      //       invoice: `Order ${Date.now().toString()}`,
+      //     }),
+      //   }
+      // );
+      // if (response.ok) {
+      //   const { status } = await response.json();
+      //   if (status === "sent" || status === "paid") {
+      //     createOrder = true;
+      //   } else {
+      //     toast.error("Payment failed, order not created", {
+      //       icon: "❌",
+      //     });
+      //   }
+      // } else {
+      //   toast.error("Payment failed, order not created", {
+      //     icon: "❌",
+      //   });
+      //   setLoading(false);
+      //   setProcessingPayment(false);
+      //   return;
+      // }
+      // setProcessingPayment(false);
+      // if (createOrder) {
         const rawOrderItems: CreateOrderItem[] = cart.map((product) => ({
           product: { _type: "reference", _ref: product._id },
           quantity: product.quantity,
@@ -120,7 +120,7 @@ const DetailsForm = ({
           clearCart();
           router.push("/orders");
         }
-      }
+      // }
     } catch (error) {
       toast.error("Something went wrong, please try again");
     } finally {
@@ -204,9 +204,11 @@ const DetailsForm = ({
         />
       </div>
       <div className="mt-4 mx-auto w-full">
-        <button
-          type="submit"
-          disabled={loading || processingPayment || cartTotal === 0}
+        <Link
+          // type="submit"
+          href={process.env.NEXT_PUBLIC_BUTTON_URL!}
+          target="_blank"
+          // disabled={loading || processingPayment || cartTotal === 0}
           className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 flex items-center justify-center font-medium rounded-lg text-sm w-full sm:max-w-sm mx-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800 disabled:bg-gray-800 disabled:text-gray-300 disabled:cursor-not-allowed dark:disabled:bg-zinc-600"
           onClick={handleSubmit}
         >
@@ -223,7 +225,7 @@ const DetailsForm = ({
               </span>
             </>
           )}
-        </button>
+        </Link>
       </div>
     </form>
   );

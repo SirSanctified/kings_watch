@@ -14,6 +14,7 @@ import {
   RadioGroup,
   Radio,
 } from "@nextui-org/react";
+import Link from "next/link";
 import FloatingInput from "../ui/floating-input";
 import { useEffect, useState } from "react";
 import { getUserById } from "@/sanity/user-utils";
@@ -88,51 +89,51 @@ const PreOrderModal = ({ product }: { product: Product }) => {
       createdAt: new Date().toISOString(),
     };
     try {
-      setProcessingPayment(true);
-      toast("Check your phone for payment request", {
-        icon: "⏳",
-        style: {
-          backgroundColor: "#f8fafc",
-          color: "#000",
-        },
-        duration: 5000,
-      });
-      const res = await fetch(process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: orderTotal * 0.9 + selectedFee,
-          auth_email: userDetails.email,
-          ecocash_number: userDetails.phone,
-          result_url: process.env.NEXT_PUBLIC_PAYMENT_RESULT_URL!,
-          product: product.name,
-          invoice: `Order ${Date.now().toString()}`,
-        }),
-      });
-      if (res.ok) {
-        const { status } = await res.json();
-        console.log("Payment status: ", status);
-        if (status === "sent" || status === "paid") {
-          createOrder = true;
-          preOderDetails.paymentStatus = "paid";
-        } else {
-          toast.error("Payment failed, please try again", {
-            icon: "❌",
-          });
-          setProcessingPayment(false);
-          return;
-        }
-      } else {
-        toast.error("Payment failed, please try again", {
-          icon: "❌",
-        });
-      }
-      setTimeout(async () => {
-        setProcessingPayment(false);
+      // setProcessingPayment(true);
+      // toast("Check your phone for payment request", {
+      //   icon: "⏳",
+      //   style: {
+      //     backgroundColor: "#f8fafc",
+      //     color: "#000",
+      //   },
+      //   duration: 5000,
+      // });
+      // const res = await fetch(process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     amount: orderTotal * 0.9 + selectedFee,
+      //     auth_email: userDetails.email,
+      //     ecocash_number: userDetails.phone,
+      //     result_url: process.env.NEXT_PUBLIC_PAYMENT_RESULT_URL!,
+      //     product: product.name,
+      //     invoice: `Order ${Date.now().toString()}`,
+      //   }),
+      // });
+      // if (res.ok) {
+      //   const { status } = await res.json();
+      //   console.log("Payment status: ", status);
+      //   if (status === "sent" || status === "paid") {
+      //     createOrder = true;
+      //     preOderDetails.paymentStatus = "paid";
+      //   } else {
+      //     toast.error("Payment failed, please try again", {
+      //       icon: "❌",
+      //     });
+      //     setProcessingPayment(false);
+      //     return;
+      //   }
+      // } else {
+      //   toast.error("Payment failed, please try again", {
+      //     icon: "❌",
+      //   });
+      // }
+      // setTimeout(async () => {
+      //   setProcessingPayment(false);
 
-        if (createOrder) {
+        // if (createOrder) {
           const response = await fetch("/api/orders/pre-order", {
             method: "POST",
             headers: {
@@ -146,8 +147,8 @@ const PreOrderModal = ({ product }: { product: Product }) => {
             });
             onOpenChange();
           }
-        }
-      });
+        // }
+      // });
     } catch (error) {
       console.log(error);
     } finally {
@@ -314,9 +315,10 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                 >
                   Close
                 </Button>
-                <Button
-                  onPress={preOrderProduct}
-                  disabled={loading || processingPayment || orderTotal === 0}
+                <Link
+                  target="_blank"
+                  href={process.env.NEXT_PUBLIC_BUTTON_URL!}
+                  onClick={preOrderProduct}
                   className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium flex items-center justify-center rounded-lg min-w-40 px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800 disabled:bg-gray-800 disabled:text-gray-300 disabled:cursor-not-allowed dark:disabled:bg-zinc-600"
                 >
                   {loading ? (
@@ -335,7 +337,7 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                   ) : (
                     "Pre-Order"
                   )}
-                </Button>
+                </Link>
               </ModalFooter>
             </>
           )}
