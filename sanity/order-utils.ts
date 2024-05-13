@@ -33,7 +33,7 @@ export async function getOrdersByUserId(
   );
 }
 
-export async function getOrderById(id: string): Promise< FetchedOrder | null> {
+export async function getOrderById(id: string): Promise<FetchedOrder | null> {
   const order: FetchedOrder = await client.fetch(
     groq`*[_type == "order" && _id == $id][0] {
       _id,
@@ -42,6 +42,9 @@ export async function getOrderById(id: string): Promise< FetchedOrder | null> {
       status,
       paymentStatus,
       number,
+      email,
+      address,
+      phone,
       "items": items[]->{
         _id,
         quantity,

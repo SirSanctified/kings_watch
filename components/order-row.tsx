@@ -4,8 +4,8 @@ import Image from "next/image";
 
 const OrderRow = ({ orderItem }: { orderItem: FetchedOrder["items"][0] }) => {
   return (
-    <div className="bg-white border-b border-gray-400 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 flex items-center gap-4">
-      <div className="flex flex-col gap-2 md:gap-4 md:flex-row">
+    <div className="bg-white p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center gap-4 lg:gap-12 justify-between">
+      <div className="flex flex-col gap-2">
         <div className="md:w-[345px] ">
           <div className="flex items-center gap-2">
             <Image
@@ -21,7 +21,12 @@ const OrderRow = ({ orderItem }: { orderItem: FetchedOrder["items"][0] }) => {
         </div>
 
         <div className="p-4 text-base font-medium text-gray-900 dark:text-white">
-          {orderItem.quantity} x {formatCurrency(orderItem.product.price)}
+          <p>
+            {orderItem.quantity} {orderItem.quantity > 1 ? "items" : "item"}
+          </p>
+          <p className="text-md font-semibold">
+            Price: {formatCurrency(orderItem.product.price)}{" "}
+          </p>
         </div>
       </div>
 
