@@ -46,7 +46,7 @@ export default function CustomNavbar() {
               width={50}
               height={50}
             />
-            <p className="font-bold hidden sm:block text-2xl text-inherit">
+            <p className="font-bold hidden sm:md text-2xl text-inherit">
               King&apos;s Watch
             </p>
           </NavbarBrand>
