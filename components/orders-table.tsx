@@ -131,7 +131,10 @@ export default function OrdersTable({ orders }: { orders: FetchedOrder[] }) {
                 }
               />
 
-              <CancelOrder orderId={order._id} />
+              <CancelOrder
+                orderId={order._id}
+                disabled={order.status !== "pending"}
+              />
             </div>
           );
         default:

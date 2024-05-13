@@ -18,9 +18,11 @@ import { useState } from "react";
 export default function CancelOrder({
   orderId,
   page = "orders",
+  disabled = false,
 }: {
   orderId: string;
   page?: string;
+  disabled?: boolean;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
@@ -53,12 +55,18 @@ export default function CancelOrder({
         color="danger"
         content="Cancel order"
       >
-        <span
-          onClick={onOpen}
-          className="text-lg text-danger cursor-pointer active:opacity-50"
-        >
-          <DeleteIcon />
-        </span>
+        {disabled ? (
+          <span className="text-lg text-danger cursor-not-allowed opacity-50">
+            <DeleteIcon />
+          </span>
+        ) : (
+          <span
+            onClick={onOpen}
+            className="text-lg text-danger cursor-pointer active:opacity-50"
+          >
+            <DeleteIcon />
+          </span>
+        )}
       </Tooltip>
       <Modal
         isOpen={isOpen}

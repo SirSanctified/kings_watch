@@ -82,7 +82,7 @@ export default function UpdateOrder({
         {disabled ? (
           <span
             id="edit-order"
-            className="text-lg text-purple-500 cursor-pointer opacity-50"
+            className="text-lg text-purple-500 cursor-not-allowed opacity-50"
           >
             <EditIcon />
           </span>
