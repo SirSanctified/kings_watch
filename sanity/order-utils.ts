@@ -26,6 +26,7 @@ export async function getOrdersByUserId(
               },
             },
             status,
+            paymentStatus,
             number,
         }`,
     { userId }
@@ -39,6 +40,7 @@ export async function getOrderById(id: string): Promise< FetchedOrder | null> {
       createdAt,
       total,
       status,
+      paymentStatus,
       number,
       "items": items[]->{
         _id,

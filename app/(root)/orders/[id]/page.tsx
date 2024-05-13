@@ -1,4 +1,5 @@
 import OrderRow from "@/components/order-row";
+import UpdateOrder from "@/components/update-order";
 import { getOrderById } from "@/sanity/order-utils";
 import { formatDistanceToNowStrict } from "date-fns";
 
@@ -13,10 +14,11 @@ export default async function OrderDetailPage({
   }
   return (
     <main className="flex min-h-screen flex-col bg-white dark:bg-gray-800 p-24 px-4 md:px-8 lg:px-24  w-full overflow-x-hidden">
-      <div className="md:mx-auto max-w-screen-xl 2xl:px-0">
+      <div className="md:mx-auto flex items-center w-full gap-4 justify-between max-w-screen-xl 2xl:px-0">
         <h1 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
           Order Detail
         </h1>
+        <UpdateOrder />
       </div>
       <div
           key={order._id}
@@ -34,7 +36,7 @@ export default async function OrderDetailPage({
             Status: {order.status}
           </p>
           {order.items.map((orderItem) => (
-          <OrderRow orderItem={orderItem} />
+          <OrderRow key={orderItem._id} orderItem={orderItem} />
           ))}
           </div>
     </main>
