@@ -7,9 +7,9 @@ import { Metadata } from "next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "King's Watch Zim - For all your watch needs",
+  title: "King's Watch Zim - Watches, Belts & Wallets | Elevate Your Everyday Style",
   description:
-    "The best watch store in the Harare. We have watches for every occasion. Find us in Room G11, Nickys Mall, Corner Bank And Chinhoyi Street, opposite Gulf Complex, Harare.",
+    "From everyday essentials to timeless classics, discover premium watches for men & women in Harare. Shop a wide range of styles & brands at King's Watch Zim. Find us in Room G11, Nickys Mall (Corner Bank & Chinhoyi St), opposite Gulf Complex.",
   robots: {
     index: true,
     follow: true,

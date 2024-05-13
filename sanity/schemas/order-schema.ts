@@ -76,12 +76,17 @@ const order = {
       title: "Payment Status",
       options: {
         list: [
-          { title: "Cash on delivery", value: "pending" },
+          { title: "Pending", value: "pending" },
           { title: "Paid", value: "paid" },
           { title: "Failed", value: "failed" },
         ],
       },
       initialValue: "pending",
+    },
+    {
+      name: "paynowReference",
+      type: "string",
+      title: "Paynow Reference",
     },
     {
       name: "createdAt",

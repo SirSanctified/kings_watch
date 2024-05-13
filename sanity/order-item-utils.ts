@@ -25,8 +25,15 @@ export async function getOrderItemsByOrderId(orderId: string) {
       _id,
       quantity,
       price,
+      name,
       total,
-      "product": product->{name, image, price},
+      "product": product->{
+        _id,
+        name,
+        "slug": slug.current,
+        "image": image.asset->url,
+        price
+      },
     }`,
     { orderId }
   );

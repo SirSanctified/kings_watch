@@ -26,22 +26,35 @@ export async function getOrdersByUserId(
               },
             },
             status,
+            paymentStatus,
             number,
         }`,
     { userId }
   );
 }
 
-export async function getOrderById(id: string): Promise<PopulatedOrder | null> {
-  const order: Order = await client.fetch(
+export async function getOrderById(id: string): Promise< FetchedOrder | null> {
+  const order: FetchedOrder = await client.fetch(
     groq`*[_type == "order" && _id == $id][0] {
       _id,
       createdAt,
       total,
       status,
+      paymentStatus,
       number,
       "items": items[]->{
         _id,
+        quantity,
+        price,
+        total,
+        name,
+        "product": product->{
+          _id,
+          name,
+          "slug": slug.current,
+          "image": image.asset->url,
+          price
+        },  
       },
     }`,
     { id }
@@ -49,10 +62,16 @@ export async function getOrderById(id: string): Promise<PopulatedOrder | null> {
   if (!order) {
     return null;
   }
-  const orderItems = await getOrderItemsByOrderId(order._id!);
-  return { ...order, items: orderItems };
+  return order;
 }
 
 export async function createOrder(order: Order) {
   return await client.create({ _type: "order", ...order });
+}
+
+export async function updateOrder(orderId: string, paynowReference: string) {
+  return await client
+    .patch(orderId)
+    .set({ paynowReference, paymentStatus: "paid" })
+    .commit();
 }

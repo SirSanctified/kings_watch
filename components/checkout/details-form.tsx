@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { RadioGroup, Radio, Spinner } from "@nextui-org/react";
 import CartOrderSummary from "../cart/order-summary";
 import FloatingInput from "../ui/floating-input";
@@ -26,7 +27,6 @@ const DetailsForm = ({
   const [user, setUser] = useState({ name, email, phoneNumber, address });
   const [selectedFee, setSelectedFee] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [processingPayment, setProcessingPayment] = useState(false);
   const { cart, cartTotal, clearCart } = useCartStore();
   const router = useRouter();
 
@@ -41,97 +41,51 @@ const DetailsForm = ({
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | any) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setLoading(true);
-    let createOrder = false;
     try {
-      setProcessingPayment(true);
-      toast("Check your phone for payment request", {
-        icon: "⏳",
-        style: {
-          backgroundColor: "#f8fafc",
-          color: "#000",
+      if (cart.length <= 0) return;
+      const rawOrderItems: CreateOrderItem[] = cart.map((product) => ({
+        product: { _type: "reference", _ref: product._id },
+        quantity: product.quantity,
+        price: product.price,
+        name: product.name,
+        total: product.price * product.quantity,
+      }));
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        duration: 5000,
+        body: JSON.stringify({
+          rawOrderItems,
+          orderTotal: cartTotal + selectedFee,
+          userId,
+          userDetails: {
+            name: user.name,
+            email: user.email,
+            phone: user.phoneNumber,
+            address: user.address,
+          },
+        }),
       });
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL!,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: cartTotal + selectedFee,
-            auth_email: user.email ?? "trevorncube2@gmail.com",
-            ecocash_number: user.phoneNumber,
-            result_url: process.env.NEXT_PUBLIC_PAYMENT_RESULT_URL!,
-            product: "King's Watch Order Payment",
-            invoice: `Order ${Date.now().toString()}`,
-          }),
-        }
-      );
       if (response.ok) {
-        const { status } = await response.json();
-        if (status === "sent" || status === "paid") {
-          createOrder = true;
-        } else {
-          toast.error("Payment failed, order not created", {
-            icon: "❌",
-          });
-        }
-      } else {
-        toast.error("Payment failed, order not created", {
-          icon: "❌",
-        });
-        setLoading(false);
-        setProcessingPayment(false);
-        return;
-      }
-      setProcessingPayment(false);
-      if (createOrder) {
-        const rawOrderItems: CreateOrderItem[] = cart.map((product) => ({
-          product: { _type: "reference", _ref: product._id },
-          quantity: product.quantity,
-          price: product.price,
-          name: product.name,
-          total: product.price * product.quantity,
-        }));
-        const response = await fetch("/api/orders", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            rawOrderItems,
-            orderTotal: cartTotal + selectedFee,
-            userId,
-            userDetails: {
-              name: user.name,
-              email: user.email,
-              phone: user.phoneNumber,
-              address: user.address,
-            },
-          }),
-        });
-        if (response.ok) {
-          clearCart();
-          router.push("/orders");
-        }
+        clearCart();
+        router.push("/orders");
       }
     } catch (error) {
       toast.error("Something went wrong, please try again");
     } finally {
       setLoading(false);
-      setProcessingPayment(false);
     }
   };
   return (
-    <form
-      className="max-w-3xl lg:mx-auto"
-      onSubmit={handleSubmit}
-    >
+    <form className="max-w-3xl lg:mx-auto">
+      <p className="mb-3 text-gray-700 dark:text-gray-200">
+        After a successfull payment, update your order with the Paynow reference
+        given to you after the payment. If you do not enter this reference, your
+        order will not be processed automatically.
+      </p>
       <legend className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
         Personal Details
       </legend>
@@ -162,7 +116,7 @@ const DetailsForm = ({
         required
         value={user.phoneNumber}
         onChange={handleChange}
-        helperText="We will send EcoCash payment request to this number"
+        helperText="We will send you order updates on this number"
       />
       <legend className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
         Delivery Options
@@ -203,26 +157,24 @@ const DetailsForm = ({
         />
       </div>
       <div className="mt-4 mx-auto w-full">
-        <button
-          type="submit"
-          disabled={loading || processingPayment || cartTotal === 0}
+        <Link
+          href={cart.length <= 0 ? "#" : process.env.NEXT_PUBLIC_BUTTON_URL!}
+          target={cart.length <= 0 ? "_self" : "_blank"}
           className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 flex items-center justify-center font-medium rounded-lg text-sm w-full sm:max-w-sm mx-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800 disabled:bg-gray-800 disabled:text-gray-300 disabled:cursor-not-allowed dark:disabled:bg-zinc-600"
           onClick={handleSubmit}
         >
           {!loading ? (
-            "Pay with EcoCash"
+            "Proceed to Payment"
           ) : (
             <>
               <Spinner
                 size="sm"
                 color="white"
               />
-              <span className="ml-2">
-                {processingPayment ? "Processing Payment" : "Creating Order"}...
-              </span>
+              <span className="ml-2">Creating Order...</span>
             </>
           )}
-        </button>
+        </Link>
       </div>
     </form>
   );

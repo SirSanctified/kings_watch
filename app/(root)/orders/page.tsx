@@ -1,3 +1,4 @@
+import OrdersTable from "@/components/orders-table";
 import PreOrderCard from "@/components/pre-order-card";
 import OrdersList from "@/components/products/orders-list";
 import { getOrdersByUserId } from "@/sanity/order-utils";
@@ -13,13 +14,13 @@ const OrdersPage = async () => {
     user.publicMetadata.userId as string
   );
   return (
-    <main className="flex min-h-screen flex-col bg-white dark:bg-gray-800 p-24 px-4 md:px-8 lg:px-24  w-full overflow-x-hidden">
-      <div className="md:mx-auto max-w-screen-xl 2xl:px-0">
+    <main className="flex min-h-screen flex-col bg-white dark:bg-gray-800 p-24 px-4 md:px-8 w-full overflow-x-hidden">
+      <div className="md:mx-auto w-full max-w-screen-xl 2xl:px-0">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
           Orders
         </h2>
         <div className="mt-6 sm:mt-8">
-          <OrdersList orders={orders} />
+          <OrdersTable orders={orders} />
         </div>
         <div className="mt-6 sm:mt-8">
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">

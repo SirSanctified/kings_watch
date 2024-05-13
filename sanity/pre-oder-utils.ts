@@ -27,3 +27,7 @@ export async function getPreOrders(userId: string) {
 export async function createPreOrder(preOrder: CreatePreOrder) {
   return await client.create({ _type: "preOrder", ...preOrder });
 }
+
+export async function updatePreOrderStatus(preOrderId: string, paynowReference: string) {
+  return await client.patch(preOrderId).set({ paynowReference, paymentStatus: "paid" }).commit();
+}

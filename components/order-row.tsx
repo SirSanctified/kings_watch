@@ -1,7 +1,6 @@
 import { formatCurrency } from "@/lib/utils";
 import { FetchedOrder } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
 
 const OrderRow = ({ orderItem }: { orderItem: FetchedOrder["items"][0] }) => {
   return (

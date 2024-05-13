@@ -41,6 +41,7 @@ export type FetchedOrder = {
   number: string;
   total: number;
   status: string;
+  paymentStatus: string;
   createdAt: string;
   items: {
     _id: string;
