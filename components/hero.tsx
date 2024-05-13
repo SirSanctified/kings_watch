@@ -32,7 +32,7 @@ export default async function Hero() {
             variant="bordered"
             size="lg"
             radius="none"
-            className="border-yellow-800 border hover:bg-yellow-600 w-full sm:w-auto transition-all duration-300 ease-linear font-medium rounded-lg"
+            className="border-yellow-800 text-md border hover:bg-yellow-600 w-full px-8 sm:w-auto transition-all duration-300 ease-linear font-medium rounded-lg"
           >
             <Link href={"/contact"}>Speak to Sales</Link>
           </Button>
