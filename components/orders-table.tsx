@@ -25,8 +25,10 @@ import {
   Timer,
   XCircle,
 } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
-
+import UpdateOrder from "./update-order";
+import CancelOrder from "./cancel-oder";
 
 const iconMap: Record<string, React.ReactNode> = {
   delivered: <Check className="mr-2" />,
@@ -74,7 +76,16 @@ export default function OrdersTable({ orders }: { orders: FetchedOrder[] }) {
         case "status":
           return (
             <span
-              className={cn("capitalize flex", order.status === "delivered" ? "text-success" : order.status === "cancelled" ? "text-danger" : order.status === "inTransit" ? "text-secondary" : "text-warning")}
+              className={cn(
+                "capitalize flex",
+                order.status === "delivered"
+                  ? "text-success"
+                  : order.status === "cancelled"
+                  ? "text-danger"
+                  : order.status === "inTransit"
+                  ? "text-secondary"
+                  : "text-yellow-700 dark:text-warning"
+              )}
             >
               {/* @ts-expect-error // TS-CONVERSION */}
               {iconMap[order.status]}
@@ -84,32 +95,43 @@ export default function OrdersTable({ orders }: { orders: FetchedOrder[] }) {
         case "paymentStatus":
           return (
             <span
-                className={cn("capitalize flex",
-                order.paymentStatus === "paid" ? "text-success" : order.paymentStatus === "failed" ? "text-danger" : "text-warning"                
-          )}
+              className={cn(
+                "capitalize flex",
+                order.paymentStatus === "paid"
+                  ? "text-success"
+                  : order.paymentStatus === "failed"
+                  ? "text-danger"
+                  : "text-yellow-700 dark:text-warning"
+              )}
             >
-                {paymentIconMap[cellValue as string ?? "pending"]}
-              {cellValue as string ?? "pending"}
+              {paymentIconMap[(cellValue as string) ?? "pending"]}
+              {(cellValue as string) ?? "pending"}
             </span>
           );
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
-              <Tooltip color="success" content="Order Details">
-                <span className="text-lg text-success cursor-pointer active:opacity-50">
+              <Tooltip
+                color="success"
+                content="Order Details"
+              >
+                <Link
+                  href={`/orders/${order._id}`}
+                  className="text-lg text-success cursor-pointer active:opacity-50"
+                >
                   <EyeIcon />
-                </span>
+                </Link>
               </Tooltip>
-              <Tooltip color="secondary" content="Edit Order">
-                <span className="text-lg text-purple-500 cursor-pointer active:opacity-50">
-                  <EditIcon />
-                </span>
-              </Tooltip>
-              <Tooltip color="danger" content="Cancel order">
-                <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                  <DeleteIcon />
-                </span>
-              </Tooltip>
+
+              <UpdateOrder
+                orderId={order._id}
+                disabled={
+                  order.paymentStatus === "paid" ||
+                  order.paymentStatus === "failed"
+                }
+              />
+
+              <CancelOrder orderId={order._id} />
             </div>
           );
         default:
