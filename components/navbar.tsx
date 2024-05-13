@@ -62,6 +62,7 @@ export default function CustomNavbar() {
             color="foreground"
             href="/products"
             title="All products"
+            className="hover:text-yellow-700"
           >
             Products
           </Link>
@@ -72,6 +73,7 @@ export default function CustomNavbar() {
               color="foreground"
               href="/orders"
               title="Orders that you have placed"
+              className="hover:text-yellow-700"
             >
               Orders
             </Link>
@@ -81,6 +83,7 @@ export default function CustomNavbar() {
           <Link
             href="/cart"
             title="Your Cart"
+            className="hover:text-yellow-700"
           >
             <ShoppingCart size={24} />
           </Link>
@@ -89,6 +92,15 @@ export default function CustomNavbar() {
               {totalItems}
             </span>
           )}
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            href="/contact"
+            title="Contact Us for more information"
+            className="hover:text-yellow-700"
+          >
+            Contact
+          </Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
@@ -149,6 +161,14 @@ export default function CustomNavbar() {
             title="Your Cart"
           >
             Cart
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem onClick={() => setIsMenuOpen(false)}>
+          <Link
+            href={"/contact"}
+            title="Contact Us for more information"
+          >
+            Contact
           </Link>
         </NavbarMenuItem>
       </NavbarMenu>
