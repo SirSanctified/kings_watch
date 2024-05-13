@@ -91,3 +91,13 @@ export type CreatePreOrder = Omit<PreOrder, "product" | "_id" | "slug"> & {
   createdAt: string;
   status: string;
 };
+
+export type ContactMessage = {
+  _id?: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  subject: string;
+  message: string;
+  createdAt?: string;
+};
