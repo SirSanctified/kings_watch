@@ -27,7 +27,7 @@ export async function getProducts(
     queryFilter = `_type == "product" && price <= ${price} && references('${category}')`;
   }
   return await client.fetch(
-    groq`*[${queryFilter}] | order(createdAt ${
+    groq`*[${queryFilter} && !(_id in path('drafts.**'))] | order(createdAt ${
       sortByFilter === "oldest" ? "asc" : "desc"
     }) {
       _id,
