@@ -44,7 +44,7 @@ export async function getProducts(
       sortByFilter,
     },
     {
-      next: { revalidate: 3600 },
+      next: { revalidate: 300 },
     }
   );
 }
@@ -64,7 +64,7 @@ export async function getProductBySlug(slug: string) {
     }`,
     { slug },
     {
-      next: { revalidate: 3600 },
+      next: { revalidate: 300 },
     }
   );
 }
