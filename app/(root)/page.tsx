@@ -1,3 +1,4 @@
+import CheckPreOrderPayment from "@/components/check-pre-order-payment";
 import CTA from "@/components/cta";
 import Hero from "@/components/hero";
 import Categories from "@/components/products/categories";
@@ -18,11 +19,17 @@ export type Product = {
   createdAt: string;
 };
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: { payment: string };
+}) {
+  const payment = searchParams?.payment ?? "";
   const products = await getProducts("", 0, "newest");
   return (
     <main className="flex min-h-screen space-y-8 flex-col bg-white dark:bg-gray-800">
       <Hero />
+      <CheckPreOrderPayment payment={payment} />
       <Categories />
       <FeaturedProducts products={products.slice(0, 4)} />
       <WhyUs />

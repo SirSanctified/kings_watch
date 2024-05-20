@@ -21,10 +21,9 @@ export async function PUT(req: Request) {
   try {
     const body: {
       preOrderId: string;
-      paynowReference: string;
     } = await req.json();
-    const { preOrderId, paynowReference } = body;
-    await updatePreOrderStatus(preOrderId, paynowReference);
+    const { preOrderId } = body;
+    await updatePreOrderStatus(preOrderId);
     revalidatePath("/orders");
     return NextResponse.json({ message: "Order updated" });
   } catch (error) {
