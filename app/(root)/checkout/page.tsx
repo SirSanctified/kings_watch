@@ -4,7 +4,12 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Toaster } from "react-hot-toast";
 
-const CheckoutPage = async () => {
+const CheckoutPage = async ({
+  searchParams,
+}: {
+  searchParams: { success: string };
+}) => {
+  const success = searchParams?.success === "true";
   return (
     <main className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
       <Toaster
@@ -32,7 +37,7 @@ const CheckoutPage = async () => {
 
           <div className="lg:mx-auto mt-6 max-w-xl flex-1 space-y-6 lg:mt-0 lg:w-full">
             <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-              <UserDetails />
+              <UserDetails success={success} />
 
               <div className="flex items-center justify-center gap-2">
                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400">

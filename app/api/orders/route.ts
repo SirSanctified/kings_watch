@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { client } from "@/sanity/product-utils";
 import { CreateOrderItem } from "@/types";
-import { createOrder, updateOrder } from "@/sanity/order-utils";
+import { createOrder } from "@/sanity/order-utils";
 import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
@@ -41,6 +41,7 @@ export async function POST(req: Request) {
         email: userDetails.email,
         address: userDetails.address,
         phone: userDetails.phone,
+        paymentStatus: "paid",
         number: Math.floor(Math.random() * 100000).toString(),
         user: { _type: "reference", _ref: userId },
         createdAt: new Date().toISOString(),
@@ -58,21 +59,6 @@ export async function POST(req: Request) {
       revalidatePath("/");
       return NextResponse.json(order);
     }
-  } catch (error) {
-    return NextResponse.json(
-      { message: "Something went wrong" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function PUT(req: Request) {
-  try {
-    const body: { orderId: string; paynowReference: string } = await req.json();
-    const { orderId, paynowReference } = body;
-    await updateOrder(orderId, paynowReference);
-    revalidatePath("/orders");
-    return NextResponse.json({ message: "Order updated" });
   } catch (error) {
     return NextResponse.json(
       { message: "Something went wrong" },

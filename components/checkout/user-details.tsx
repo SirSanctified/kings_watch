@@ -2,7 +2,7 @@ import { getUserById } from "@/sanity/user-utils";
 import { currentUser } from "@clerk/nextjs/server";
 import DetailsForm from "./details-form";
 
-export default async function UserDetails() {
+export default async function UserDetails({ success }: { success: boolean }) {
   const user = await currentUser();
   if (!user) {
     return null;
@@ -19,6 +19,7 @@ export default async function UserDetails() {
         email={sanityUser.email}
         phoneNumber={sanityUser.phoneNumber}
         address={sanityUser.address}
+        success={success}
       />
     </div>
   );

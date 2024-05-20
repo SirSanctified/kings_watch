@@ -3,7 +3,6 @@
 import { groq } from "next-sanity";
 import { client } from "./product-utils";
 import { FetchedOrder, Order, PopulatedOrder } from "@/types";
-import { getOrderItemsByOrderId } from "./order-item-utils";
 
 export async function getOrdersByUserId(
   userId: string
@@ -70,11 +69,4 @@ export async function getOrderById(id: string): Promise<FetchedOrder | null> {
 
 export async function createOrder(order: Order) {
   return await client.create({ _type: "order", ...order });
-}
-
-export async function updateOrder(orderId: string, paynowReference: string) {
-  return await client
-    .patch(orderId)
-    .set({ paynowReference, paymentStatus: "paid" })
-    .commit();
 }

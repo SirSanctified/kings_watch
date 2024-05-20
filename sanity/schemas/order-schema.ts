@@ -84,11 +84,6 @@ const order = {
       initialValue: "pending",
     },
     {
-      name: "paynowReference",
-      type: "string",
-      title: "Paynow Reference",
-    },
-    {
       name: "createdAt",
       type: "datetime",
       title: "Created At",

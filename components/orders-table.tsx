@@ -27,7 +27,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
-import UpdateOrder from "./update-order";
 import CancelOrder from "./cancel-oder";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -122,15 +121,6 @@ export default function OrdersTable({ orders }: { orders: FetchedOrder[] }) {
                   <EyeIcon />
                 </Link>
               </Tooltip>
-
-              <UpdateOrder
-                orderId={order._id}
-                disabled={
-                  order.paymentStatus === "paid" ||
-                  order.paymentStatus === "failed"
-                }
-              />
-
               <CancelOrder
                 orderId={order._id}
                 disabled={order.status !== "pending"}

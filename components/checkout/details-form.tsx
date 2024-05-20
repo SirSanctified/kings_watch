@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { RadioGroup, Radio, Spinner } from "@nextui-org/react";
 import CartOrderSummary from "../cart/order-summary";
@@ -17,12 +17,14 @@ const DetailsForm = ({
   email,
   phoneNumber,
   address,
+  success,
 }: {
   userId: string;
   name: string;
   email: string;
   phoneNumber: string;
   address: string;
+  success: boolean;
 }) => {
   const [user, setUser] = useState({ name, email, phoneNumber, address });
   const [selectedFee, setSelectedFee] = useState(0);
@@ -41,7 +43,7 @@ const DetailsForm = ({
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     setLoading(true);
     try {
       if (cart.length <= 0) return;
@@ -78,14 +80,16 @@ const DetailsForm = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, cart, cartTotal, clearCart, router, selectedFee, userId]);
+
+  useEffect(() => {
+    if (success) {
+      console.log("success", typeof success);
+      handleSubmit();
+    }
+  }, [handleSubmit, success]);
   return (
     <form className="max-w-3xl lg:mx-auto">
-      <p className="mb-3 text-gray-700 dark:text-gray-200">
-        After a successfull payment, update your order with the Paynow reference
-        given to you after the payment. If you do not enter this reference, your
-        order will not be processed automatically.
-      </p>
       <legend className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
         Personal Details
       </legend>
@@ -161,7 +165,6 @@ const DetailsForm = ({
           href={cart.length <= 0 ? "#" : process.env.NEXT_PUBLIC_BUTTON_URL!}
           target={cart.length <= 0 ? "_self" : "_blank"}
           className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 flex items-center justify-center font-medium rounded-lg text-sm w-full sm:max-w-sm mx-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800 disabled:bg-gray-800 disabled:text-gray-300 disabled:cursor-not-allowed dark:disabled:bg-zinc-600"
-          onClick={handleSubmit}
         >
           {!loading ? (
             "Proceed to Payment"

@@ -29,6 +29,7 @@ export type Order = {
   phone: string;
   address: string;
   status: string;
+  paymentStatus: string;
   createdAt?: string;
   items: { _type: "reference"; _ref: string }[];
   user: { _type: "reference"; _ref: string };

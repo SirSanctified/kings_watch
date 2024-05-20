@@ -113,7 +113,14 @@ const PreOrderModal = ({ product }: { product: Product }) => {
         onPress={onOpen}
         className="bg-yellow-700 hover:bg-yellow-800 text-white text-md font-medium h-10 px-4"
       >
-        {isLoaded ? "Pre-Order" : <Spinner size="sm" color="white" />}
+        {isLoaded ? (
+          "Pre-Order"
+        ) : (
+          <Spinner
+            size="sm"
+            color="white"
+          />
+        )}
       </Button>
       <Modal
         isOpen={isOpen}
@@ -130,12 +137,6 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                 Fill in your order details
               </ModalHeader>
               <ModalBody className="flex mt-4 flex-col space-y-6">
-                <p className="mb-3 text-gray-700 dark:text-gray-200">
-                  After a successfull payment, update your order with the Paynow
-                  reference given to you after the payment. If you do not enter
-                  this reference, your order will not be processed
-                  automatically.
-                </p>
                 <h2 className="text-xl font-semibold text-black dark:text-gray-50">
                   Personal Details
                 </h2>
@@ -258,7 +259,11 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button
+                  color="danger"
+                  variant="flat"
+                  onPress={onClose}
+                >
                   Close
                 </Button>
                 <Link
@@ -269,7 +274,10 @@ const PreOrderModal = ({ product }: { product: Product }) => {
                 >
                   {loading ? (
                     <>
-                      <Spinner size="sm" color="white" />
+                      <Spinner
+                        size="sm"
+                        color="white"
+                      />
                       <span className="ml-2">Creating Orders ...</span>
                     </>
                   ) : (
