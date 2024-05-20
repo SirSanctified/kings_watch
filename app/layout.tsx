@@ -60,10 +60,10 @@ export const metadata: Metadata = {
     description:
       "The best watch store in the Harare. We have watches for every occasion. Find us in Room G11, Nickys Mall, Corner Bank And Chinhoyi Street, opposite Gulf Complex, Harare.",
     determiner: "auto",
-    url: "https://kings-watch.vercel.app/",
+    url: "https://www.kingswatchzim.co.zw/",
     countryName: "Zimbabwe",
   },
-  metadataBase: new URL("https://kings-watch.vercel.app/"),
+  metadataBase: new URL("https://www.kingswatchzim.co.zw/"),
 };
 const RootLayout = ({
   children,
